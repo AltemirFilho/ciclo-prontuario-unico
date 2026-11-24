@@ -44,6 +44,16 @@ createServer(async (req, res) => {
   } catch {
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Não encontrado')
   }
+}).on('error', (erro) => {
+  // já tem um servidor nesta porta (o INICIAR.bat foi aberto duas vezes): só abre o navegador
+  if (erro.code === 'EADDRINUSE') {
+    console.log(`A porta ${PORTA} já está em uso; o sistema provavelmente já está rodando.`)
+    if (process.argv.includes('--abrir') && process.platform === 'win32') {
+      exec(`start "" "http://localhost:${PORTA}/docs/apresentacao/"`)
+    }
+    return
+  }
+  throw erro
 }).listen(PORTA, () => {
   console.log(`Ciclo Prontuário Único em http://localhost:${PORTA}/app/`)
   console.log(`Apresentação em http://localhost:${PORTA}/docs/apresentacao/`)
