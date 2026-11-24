@@ -62,4 +62,4 @@ scripts/      servidor local, capturas de tela, gerador do artigo, automação d
 
 ## Dados e uso de IA
 
-Todos os dados são fictícios e gerados por script. O assistente de IA Claude (Anthropic) foi usado como apoio na escrita do código, dos dados de teste e do texto, como declarado no artigo; os resultados vêm de testes executados e podem ser repetidos com os comandos acima.
+Todos os dados são fictícios e gerados por script. O uso de ferramentas de IA está declarado no artigo, como pede o manual da UNIT; os resultados vêm de testes executados e podem ser repetidos com os comandos acima.

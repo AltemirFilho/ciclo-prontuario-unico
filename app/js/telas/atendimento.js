@@ -13,12 +13,23 @@ import {
 let linhaAtual = []            // linha do tempo do paciente aberto
 let filtroEspecialidade = null // null = todas
 let destacarId = null          // registro recém-criado
+let verTodos = false           // lista de todos os pacientes aberta
+let paginaTodos = 0
+const POR_PAGINA = 30
 
 export function iniciarAtendimento() {
   let espera = null
   $('#busca').addEventListener('input', (ev) => {
     clearTimeout(espera)
     espera = setTimeout(() => buscar(ev.target.value), 160)
+  })
+  $('#ver-todos').addEventListener('click', () => {
+    verTodos = !verTodos
+    $('#ver-todos').textContent = verTodos ? 'Esconder a lista' : 'Ver todos os pacientes'
+    if ($('#busca').value.trim().length < 2) {
+      if (verTodos) listarTodos()
+      else { $('#resultados-busca').innerHTML = ''; $('#resultados-busca').classList.remove('rolagem') }
+    }
   })
   $('#novo-paciente').addEventListener('click', abrirModalPaciente)
   $('#np-cancelar').addEventListener('click', () => $('#modal-paciente').close())
@@ -61,10 +72,56 @@ async function carregarAgenda() {
     b.addEventListener('click', () => abrirPaciente(Number(b.dataset.paciente))))
 }
 
+// Sem nada digitado: a lista de todos os pacientes, quem foi atendido
+// mais recentemente primeiro, de 30 em 30. Só nome e CPF: abrir o
+// prontuário continua passando pela linha_do_tempo (que audita a leitura).
+async function listarTodos(maisUmaPagina = false) {
+  const lista = $('#resultados-busca')
+  paginaTodos = maisUmaPagina ? paginaTodos + 1 : 0
+  const [{ rows }, total] = await Promise.all([
+    db.query(
+      `SELECT p.id, p.nome, p.cpf, max(a.inicio) FILTER (WHERE a.inicio <= now()) AS ultimo
+         FROM paciente p
+         LEFT JOIN atendimento a ON a.paciente_id = p.id
+        GROUP BY p.id
+        ORDER BY ultimo DESC NULLS LAST, p.nome
+        LIMIT $1 OFFSET $2`, [POR_PAGINA + 1, paginaTodos * POR_PAGINA]),
+    paginaTodos ? null : db.query('SELECT count(*)::int AS n FROM paciente'),
+  ])
+  const temMais = rows.length > POR_PAGINA
+  const itens = rows.slice(0, POR_PAGINA).map((p) => `
+    <li><button data-paciente="${p.id}">
+      <span></span>
+      <span class="nome">${esc(p.nome)}
+        <span class="detalhe">CPF ${mascararCpf(p.cpf)}${p.ultimo ? ` · último atendimento ${quando(p.ultimo)}` : ' · sem atendimento ainda'}</span></span>
+      <span></span>
+    </button></li>`).join('')
+  const mais = temMais ? '<li><button class="link-botao" id="mais-pacientes" type="button">Mostrar mais 30</button></li>' : ''
+  lista.classList.add('rolagem')
+  if (paginaTodos === 0) {
+    const n = total.rows[0].n.toLocaleString('pt-BR')
+    lista.innerHTML = `<li class="cabeca-lista">${n} pacientes · atendidos mais recentemente primeiro</li>${itens}${mais}`
+    lista.scrollTop = 0
+  } else {
+    $('#mais-pacientes')?.closest('li').remove()
+    lista.insertAdjacentHTML('beforeend', itens + mais)
+  }
+  $$('button[data-paciente]:not([data-ligado])', lista).forEach((b) => {
+    b.dataset.ligado = '1'
+    b.addEventListener('click', () => abrirPaciente(Number(b.dataset.paciente)))
+  })
+  $('#mais-pacientes')?.addEventListener('click', () => listarTodos(true))
+}
+
 async function buscar(termo) {
   const lista = $('#resultados-busca')
   termo = termo.trim()
-  if (termo.length < 2) { lista.innerHTML = ''; return }
+  if (termo.length < 2) {
+    if (verTodos) listarTodos()
+    else { lista.innerHTML = ''; lista.classList.remove('rolagem') }
+    return
+  }
+  lista.classList.remove('rolagem')
   const { rows } = await db.query('SELECT * FROM buscar_paciente($1, 8)', [termo])
   lista.innerHTML = rows.length
     ? rows.map((p) => `
@@ -169,13 +226,27 @@ function desenharProntuario(p) {
   desenharLinha()
 }
 
+const br = (v) => String(v).replace('.', ',')
+const ROTULOS = {
+  dor: (v) => `Dor ${v}/10`, sessao: (v) => `Sessão ${v}`, forca_grau: (v) => `Força grau ${v}/5`,
+  adm_graus: (v) => `Amplitude ${v}°`, sentar_levantar_30s: (v) => `Sentar e levantar: ${v} em 30 s`,
+  marcha: (v) => `Marcha: ${v}`,
+  pa: (v) => `PA ${v}`, fc: (v) => `FC ${v} bpm`, fr: (v) => `FR ${v} irpm`, temp_c: (v) => `Temp. ${br(v)} °C`,
+  spo2: (v) => `SpO₂ ${v}%`, conduta: (v) => `Conduta: ${v}`, retorno_dias: (v) => `Retorno em ${v} dias`,
+  glicemia: (v) => `Glicemia ${v} mg/dL`, procedimento: (v) => `Procedimento: ${v}`,
+  peso_kg: (v) => `Peso ${br(v)} kg`, altura_cm: (v) => `Altura ${v} cm`, imc: (v) => `IMC ${br(v)}`,
+  circ_abdominal_cm: (v) => `Cintura ${br(v)} cm`, agua_l: (v) => `Água ${br(v)} L/dia`, plano: (v) => `Plano: ${v}`,
+  humor: (v) => `Humor ${v}/10`, ansiedade: (v) => `Ansiedade ${v}/10`, frequencia: (v) => `Sessões: ${v}`,
+}
+const ORDEM_ROTULOS = Object.keys(ROTULOS)
+
 function rotuloMedida(chave, valor) {
-  const nomes = {
-    dor: (v) => `Dor ${v}/10`, pa: (v) => `PA ${v}`, fc: (v) => `FC ${v} bpm`,
-    glicemia: (v) => `Glicemia ${v} mg/dL`, peso_kg: (v) => `Peso ${String(v).replace('.', ',')} kg`,
-    altura_cm: (v) => `Altura ${v} cm`, imc: (v) => `IMC ${String(v).replace('.', ',')}`,
-  }
-  return (nomes[chave] ?? ((v) => `${chave}: ${v}`))(valor)
+  return (ROTULOS[chave] ?? ((v) => `${chave}: ${v}`))(valor)
+}
+
+function ordenarMedidas(medidas) {
+  const pos = (k) => { const i = ORDEM_ROTULOS.indexOf(k); return i < 0 ? 999 : i }
+  return Object.entries(medidas ?? {}).sort(([a], [b]) => pos(a) - pos(b))
 }
 
 function desenharLinha() {
@@ -188,7 +259,7 @@ function desenharLinha() {
   $('#linha-do-tempo').innerHTML = itens.map((r) => {
     const meu = r.profissional_id === estado.profissional.id
     const original = r.retifica_id ? porId.get(String(r.retifica_id)) : null
-    const medidas = Object.entries(r.medidas ?? {})
+    const medidas = ordenarMedidas(r.medidas)
       .map(([k, v]) => `<span class="etiqueta">${esc(rotuloMedida(k, v))}</span>`).join('')
     const selos = [
       r.retificado_por ? '<span class="etiqueta alerta">corrigido por retificação</span>' : '',
@@ -257,18 +328,59 @@ async function carregarAuditoria(id) {
 // ---------------------------------------------------------------------
 // Formulário de registro
 // ---------------------------------------------------------------------
+// Cada especialidade tem os seus campos. Tudo vai para a mesma coluna
+// medidas (JSONB) do registro: área nova ou campo novo não muda a tabela.
+// A dor (0 a 10) e o peso têm CHECK no banco, com teste (T16 e T04).
+const campoNum = (id, rotulo, extra = '') =>
+  `<div class="campo"><label for="${id}">${rotulo}</label><input id="${id}" type="number" ${extra}></div>`
+const campoTxt = (id, rotulo, exemplo) =>
+  `<div class="campo"><label for="${id}">${rotulo}</label><input id="${id}" placeholder="${exemplo}"></div>`
+const campoSel = (id, rotulo, opcoes) =>
+  `<div class="campo"><label for="${id}">${rotulo}</label><select id="${id}"><option value="">selecione</option>${opcoes.map((o) => `<option>${o}</option>`).join('')}</select></div>`
+const linha = (...campos) => `<div class="campo-linha">${campos.join('')}</div>`
+const grupo = (titulo, corpo) => `<fieldset class="grupo-medidas"><legend>${titulo}</legend>${corpo}</fieldset>`
+
 const CAMPOS_POR_ESPECIALIDADE = {
-  Fisioterapia: `<div class="campo"><label for="m-dor">Dor (escala de 0 a 10)</label><input id="m-dor" type="number" step="1" placeholder="ex.: 4"></div>`,
-  Enfermagem: `<div class="campo-linha">
-      <div class="campo"><label for="m-pa">Pressão (PA)</label><input id="m-pa" placeholder="120x80"></div>
-      <div class="campo"><label for="m-glicemia">Glicemia (mg/dL)</label><input id="m-glicemia" type="number"></div></div>`,
-  Medicina: `<div class="campo-linha">
-      <div class="campo"><label for="m-pa">Pressão (PA)</label><input id="m-pa" placeholder="120x80"></div>
-      <div class="campo"><label for="m-fc">Freq. cardíaca (bpm)</label><input id="m-fc" type="number"></div></div>`,
-  'Nutrição': `<div class="campo-linha">
-      <div class="campo"><label for="m-peso">Peso (kg)</label><input id="m-peso" type="number" step="0.1"></div>
-      <div class="campo"><label for="m-altura">Altura (cm)</label><input id="m-altura" type="number"></div></div>`,
-  Psicologia: '',
+  Fisioterapia: grupo('Avaliação da Fisioterapia',
+    linha(campoNum('m-dor', 'Dor (escala de 0 a 10)', 'step="1" placeholder="ex.: 4"'), campoNum('m-sessao', 'Sessão nº', 'step="1"')) +
+    linha(campoSel('m-forca', 'Força muscular (grau 0 a 5)', ['0', '1', '2', '3', '4', '5']), campoNum('m-adm', 'Amplitude de movimento (°)', 'placeholder="ex.: 110"')) +
+    linha(campoNum('m-sl30', 'Sentar e levantar em 30 s', 'step="1" placeholder="repetições"'),
+      campoSel('m-marcha', 'Marcha', ['Independente', 'Com bengala', 'Com andador', 'Cadeira de rodas']))),
+  Enfermagem: grupo('Triagem da Enfermagem',
+    linha(campoTxt('m-pa', 'Pressão (PA)', '120x80'), campoNum('m-temp', 'Temperatura (°C)', 'step="0.1"')) +
+    linha(campoNum('m-spo2', 'Saturação SpO₂ (%)'), campoNum('m-glicemia', 'Glicemia capilar (mg/dL)')) +
+    linha(campoNum('m-dor', 'Dor (escala de 0 a 10)', 'step="1"'),
+      campoSel('m-proc', 'Procedimento', ['Sinais vitais', 'Curativo', 'Medicação', 'Vacina', 'Coleta de exame', 'Orientação']))),
+  Medicina: grupo('Exame da Medicina',
+    linha(campoTxt('m-pa', 'Pressão (PA)', '120x80'), campoNum('m-fc', 'Freq. cardíaca (bpm)')) +
+    linha(campoNum('m-fr', 'Freq. respiratória (irpm)'), campoNum('m-temp', 'Temperatura (°C)', 'step="0.1"')) +
+    linha(campoNum('m-spo2', 'Saturação SpO₂ (%)'), campoNum('m-retorno', 'Retorno em (dias)', 'step="1"')) +
+    campoSel('m-conduta', 'Conduta', ['Orientação', 'Prescrição', 'Pedido de exames', 'Encaminhamento', 'Alta'])),
+  'Nutrição': grupo('Avaliação da Nutrição',
+    linha(campoNum('m-peso', 'Peso (kg)', 'step="0.1"'), campoNum('m-altura', 'Altura (cm)')) +
+    '<p class="imc-vivo" id="imc-vivo">O IMC é calculado sozinho com peso e altura.</p>' +
+    linha(campoNum('m-cintura', 'Circunferência abdominal (cm)', 'step="0.1"'), campoNum('m-agua', 'Água por dia (litros)', 'step="0.1"')) +
+    campoSel('m-plano', 'Plano alimentar', ['Manutenção', 'Redução de peso', 'Controle glicêmico', 'Ganho de massa', 'Reeducação alimentar'])),
+  Psicologia: grupo('Sessão da Psicologia (em sigilo)',
+    linha(campoNum('m-sessao', 'Sessão nº', 'step="1"'), campoSel('m-freq', 'Frequência', ['Semanal', 'Quinzenal', 'Mensal'])) +
+    linha(campoNum('m-humor', 'Humor (0 a 10)', 'step="1"'), campoNum('m-ansiedade', 'Ansiedade (0 a 10)', 'step="1"'))),
+}
+
+// [chave no JSONB, id do campo, tipo]
+const MEDIDAS = [
+  ['dor', 'm-dor', 'n'], ['sessao', 'm-sessao', 'n'], ['forca_grau', 'm-forca', 'n'], ['adm_graus', 'm-adm', 'n'],
+  ['sentar_levantar_30s', 'm-sl30', 'n'], ['marcha', 'm-marcha', 't'],
+  ['pa', 'm-pa', 't'], ['fc', 'm-fc', 'n'], ['fr', 'm-fr', 'n'], ['temp_c', 'm-temp', 'n'], ['spo2', 'm-spo2', 'n'],
+  ['retorno_dias', 'm-retorno', 'n'], ['conduta', 'm-conduta', 't'],
+  ['glicemia', 'm-glicemia', 'n'], ['procedimento', 'm-proc', 't'],
+  ['peso_kg', 'm-peso', 'n'], ['altura_cm', 'm-altura', 'n'], ['circ_abdominal_cm', 'm-cintura', 'n'],
+  ['agua_l', 'm-agua', 'n'], ['plano', 'm-plano', 't'],
+  ['humor', 'm-humor', 'n'], ['ansiedade', 'm-ansiedade', 'n'], ['frequencia', 'm-freq', 't'],
+]
+
+function calcularImc(peso, alturaCm) {
+  if (!(peso > 0) || !(alturaCm > 0)) return undefined
+  return Math.round((peso / (alturaCm / 100) ** 2) * 10) / 10
 }
 
 function desenharFormulario() {
@@ -295,21 +407,30 @@ function desenharFormulario() {
     </form>`
   $('#cancelar-ret')?.addEventListener('click', () => { estado.retificando = null; desenharFormulario() })
   $('#form-registro').addEventListener('submit', salvarRegistro)
+
+  // Nutrição: o IMC aparece enquanto digita
+  const peso = $('#m-peso'), altura = $('#m-altura'), imc = $('#imc-vivo')
+  if (peso && altura && imc) {
+    const atualizar = () => {
+      const v = calcularImc(Number(peso.value), Number(altura.value))
+      imc.innerHTML = v ? `IMC calculado: <b>${br(v)}</b>` : 'O IMC é calculado sozinho com peso e altura.'
+    }
+    peso.addEventListener('input', atualizar)
+    altura.addEventListener('input', atualizar)
+  }
 }
 
 function lerMedidas() {
   const medidas = {}
-  const num = (sel) => {
-    const el = $(sel)
-    if (!el || el.value.trim() === '') return undefined
-    return Number(el.value)
+  for (const [chave, id, tipo] of MEDIDAS) {
+    const el = document.getElementById(id)
+    if (!el || el.value.trim() === '') continue
+    if (tipo === 't') { medidas[chave] = el.value.trim(); continue }
+    const v = Number(el.value)
+    if (!Number.isNaN(v)) medidas[chave] = v
   }
-  const txt = (sel) => $(sel)?.value.trim() || undefined
-  const valores = {
-    dor: num('#m-dor'), pa: txt('#m-pa'), glicemia: num('#m-glicemia'),
-    fc: num('#m-fc'), peso_kg: num('#m-peso'), altura_cm: num('#m-altura'),
-  }
-  for (const [k, v] of Object.entries(valores)) if (v !== undefined && !Number.isNaN(v)) medidas[k] = v
+  const imc = calcularImc(medidas.peso_kg, medidas.altura_cm)
+  if (imc !== undefined) medidas.imc = imc
   return medidas
 }
 

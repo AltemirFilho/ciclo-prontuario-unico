@@ -213,6 +213,13 @@ a { color: var(--accent); }
 .campo input:focus, .campo select:focus, .campo textarea:focus { border-color: var(--primary); }
 .campo textarea { min-height: 110px; resize: vertical; }
 .campo-linha { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.grupo-medidas { min-width: 0; margin: 0 0 12px; padding: 10px 10px 0; border: 1px solid var(--line-strong); border-radius: 10px; }
+.grupo-medidas legend { padding: 0 6px; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+.imc-vivo { margin: -4px 0 12px; font-size: 12.5px; color: var(--ink-muted); }
+.imc-vivo b { color: var(--ink); }
+#ver-todos { margin-top: 8px; }
+.lista.rolagem { max-height: 340px; overflow-y: auto; margin-top: 6px; border-top: 1px solid var(--line); }
+.lista .cabeca-lista { padding: 8px 2px 4px; font-size: 12px; color: var(--ink-muted); }
 .vazio { padding: 26px 16px; text-align: center; color: var(--ink-muted); }
 
 /* aviso do banco (erro ou sucesso) */

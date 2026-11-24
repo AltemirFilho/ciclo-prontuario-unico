@@ -243,8 +243,7 @@ B.append(par(run('Disciplina: Banco de Dados · Professor: Sérgio Roberto Santo
              spacing='<w:spacing w:after="80"/>', ind=None, jc='center'))
 B.append(par(run('1', sup=True) + run('Curso de Ciência da Computação · Universidade Tiradentes (UNIT) · Aracaju/SE'),
              spacing='<w:spacing w:after="20"/>', ind=None, jc='center'))
-B.append(par(run('[e-mail institucional de cada um]', size=20, font='Courier New', highlight='yellow') +
-             run(' · ' + REPO, size=20, font='Courier New'),
+B.append(par(run(REPO, size=20, font='Courier New'),
              spacing='<w:spacing w:after="280"/>', ind=None, jc='center'))
 
 resumo = (
