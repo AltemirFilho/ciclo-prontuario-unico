@@ -11,11 +11,27 @@
 
 <!-- 1 · CAPA -->
 <section class="slide s-capa capa" data-sec="Capa" data-titulo="Capa">
-  <div class="anel"></div>
-  <svg class="logo-ciclo ent e1" viewBox="0 0 100 100" aria-hidden="true">
-    <path class="arco ae" d="M 48 12.05 A 38 38 0 0 0 48 87.95"/><path class="arco ad" d="M 52 12.05 A 38 38 0 0 1 52 87.95"/>
-    <circle class="centro" cx="50" cy="50" r="6"/><g class="giro"><circle class="orb" cx="50" cy="12" r="5"/></g>
-  </svg>
+  <div class="aurora"><i></i><i></i><i></i></div>
+  <div class="feixe"></div>
+  <div class="orbita-capa ent e1" aria-hidden="true">
+    <div class="pulso"></div><div class="pulso p2"></div>
+    <div class="trilha a1">
+      <span class="esp" style="--c:var(--medicina);--a:0deg"><span class="gira"><b>Medicina</b></span></span>
+      <span class="esp" style="--c:var(--fisio);--a:180deg"><span class="gira"><b>Fisioterapia</b></span></span>
+    </div>
+    <div class="trilha a2">
+      <span class="esp" style="--c:var(--enfermagem);--a:90deg"><span class="gira"><b>Enfermagem</b></span></span>
+      <span class="esp" style="--c:var(--nutricao);--a:210deg"><span class="gira"><b>Nutrição</b></span></span>
+      <span class="esp" style="--c:var(--psico);--a:330deg"><span class="gira"><b>Psicologia</b></span></span>
+    </div>
+    <div class="nucleo">
+      <svg class="logo-ciclo" viewBox="0 0 100 100">
+        <path class="arco ae" d="M 48 12.05 A 38 38 0 0 0 48 87.95"/><path class="arco ad" d="M 52 12.05 A 38 38 0 0 1 52 87.95"/>
+        <circle class="centro" cx="50" cy="50" r="6"/><g class="giro"><circle class="orb" cx="50" cy="12" r="5"/></g>
+      </svg>
+      <span>1 prontuário</span>
+    </div>
+  </div>
   <p class="rot ent e1">Trabalho de Banco de Dados · UNIT</p>
   <h1 class="ent e2">Prontuário <em>espalhado</em>: um prontuário único para a clínica multidisciplinar</h1>
   <p class="sub ent e3">Ciclo Prontuário Único · PostgreSQL, 38 testes executados e índices medidos</p>
@@ -26,7 +42,7 @@
 </section>
 
 <!-- 2 · A SITUAÇÃO REAL -->
-<section class="slide s-situacao" data-sec="O problema" data-titulo="Dona Maria em três fichas" data-steps="2">
+<section class="slide s-situacao" data-sec="O problema" data-titulo="Dona Maria em três fichas" data-steps="3">
   <div class="cab ent e1"><b>01</b>O problema</div>
   <h2 class="ent e2">Terça, 14h. Dona Maria chega à <em>fisioterapia</em>.</h2>
   <div class="grade">
@@ -42,9 +58,18 @@
       <div class="ficha" style="--g:-1.6deg"><b>Consultório 1</b>Maria das Graças Souza<br>CPF 183.980.296-09<br>DM2 · HAS<br><span class="r">ALÉRGICA A DIPIRONA</span><br>Metformina 2x/dia</div>
       <div class="ficha" style="--g:1.2deg"><b>Fisioterapia</b>Maria das Gracas Sousa<br>CPF 183.980.296-<span class="r">08</span><br>Dor no joelho D<br>Alergias: <span class="r">nega</span><br>Dor 7/10</div>
       <div class="ficha" style="--g:-.6deg"><b>Nutrição</b>Maria G. Souza<br>CPF <span class="r">não informado</span><br>Diabética<br>Metformina <span class="r">3x/dia</span><br>Peso 82,4 kg</div>
+      <div class="unico">
+        <div class="topo-u"><svg class="logo-ciclo" viewBox="0 0 100 100" aria-hidden="true">
+          <path class="arco ae" d="M 48 12.05 A 38 38 0 0 0 48 87.95"/><path class="arco ad" d="M 52 12.05 A 38 38 0 0 1 52 87.95"/>
+          <circle class="centro" cx="50" cy="50" r="6"/><circle class="orb" cx="50" cy="12" r="5"/></svg>Prontuário único</div>
+        <h4>Maria das Graças Souza</h4>
+        <div class="cpf">CPF 183.980.296-09 · conferido pelo banco</div>
+        <div class="al"><b>ALERGIA GRAVE:</b> dipirona, para toda a equipe</div>
+        <div class="chips"><span style="--c:var(--medicina)">Medicina</span><span style="--c:var(--enfermagem)">Enfermagem</span><span style="--c:var(--fisio)">Fisioterapia</span><span style="--c:var(--nutricao)">Nutrição</span></div>
+      </div>
     </div>
   </div>
-  <div class="msg" data-k="2"><span>Nenhuma ficha está errada sozinha. Juntas, contam <b>três histórias diferentes</b> da mesma pessoa.</span></div>
+  <div class="msg" data-k="2"><span class="antes">Nenhuma ficha está errada sozinha. Juntas, contam <b>três histórias diferentes</b> da mesma pessoa.</span><span class="depois">Com o banco, as três viram <b>uma ficha só</b>: todo mundo lê, ninguém apaga.</span></div>
 </section>
 
 <!-- 3 · POR QUE SE ESPALHA -->
@@ -52,14 +77,18 @@
   <div class="cab ent e1"><b>02</b>A causa</div>
   <h2 class="ent e2">Quatro jeitos de o prontuário se espalhar, <em>quatro regras no banco</em></h2>
   <div class="causas">
-    <div class="causa" data-k="1"><div class="antes"><small>Antes</small>A ficha fica presa na sala de quem atendeu por último</div><div class="seta">→</div>
-      <div class="depois"><small>No banco</small>Uma tabela de registros para todas as áreas; a sala vira só um dado do atendimento</div></div>
-    <div class="causa" data-k="2"><div class="antes"><small>Antes</small>A mesma pessoa ganha outra ficha: CPF trocado, nome sem acento</div><div class="seta">→</div>
-      <div class="depois"><small>No banco</small>CPF único e conferido pelo banco, e busca que tolera erro de digitação</div></div>
-    <div class="causa" data-k="3"><div class="antes"><small>Antes</small>Corrigir é apagar: corretivo, folha arrancada, UPDATE</div><div class="seta">→</div>
-      <div class="depois"><small>No banco</small>Nada se apaga. Correção é retificação, que aponta para o original</div></div>
-    <div class="causa" data-k="4"><div class="antes"><small>Antes</small>Ninguém sabe quem leu a ficha</div><div class="seta">→</div>
-      <div class="depois"><small>No banco</small>Toda leitura e toda escrita deixam rastro (LGPD)</div></div>
+    <div class="virar" data-k="1" style="--i:0"><div class="miolo">
+      <div class="face frente"><small>Causa 1 · antes</small>A ficha fica presa na sala de quem atendeu por último</div>
+      <div class="face verso"><small>No banco</small>Uma tabela de registros para todas as áreas; a sala vira só um dado do atendimento</div></div></div>
+    <div class="virar" data-k="2" style="--i:1"><div class="miolo">
+      <div class="face frente"><small>Causa 2 · antes</small>A mesma pessoa ganha outra ficha: CPF trocado, nome sem acento</div>
+      <div class="face verso"><small>No banco</small>CPF único e conferido pelo banco, e busca que tolera erro de digitação</div></div></div>
+    <div class="virar" data-k="3" style="--i:2"><div class="miolo">
+      <div class="face frente"><small>Causa 3 · antes</small>Corrigir é apagar: corretivo, folha arrancada, UPDATE</div>
+      <div class="face verso"><small>No banco</small>Nada se apaga. Correção é retificação, que aponta para o original</div></div></div>
+    <div class="virar" data-k="4" style="--i:3"><div class="miolo">
+      <div class="face frente"><small>Causa 4 · antes</small>Ninguém sabe quem leu a ficha</div>
+      <div class="face verso"><small>No banco</small>Toda leitura e toda escrita deixam rastro (LGPD)</div></div></div>
   </div>
 </section>
 
@@ -85,10 +114,10 @@
   <div class="grade">
     <img class="tela ent e3" src="../evidencias/18-modelo-banco-escuro.png" alt="Modelo entidade-relacionamento do banco">
     <div class="numeros encadeia">
-      <div class="card numero"><div class="v">8</div><div class="r">tabelas, uma só para os registros de todas as áreas</div></div>
-      <div class="card numero"><div class="v">6</div><div class="r">gatilhos com regras de negócio</div></div>
-      <div class="card numero"><div class="v">7</div><div class="r">índices criados: 4 medidos sem e com, e o custo de todos</div></div>
-      <div class="card numero"><div class="v">38</div><div class="r">testes executados, os mesmos .sql no terminal e no sistema</div></div>
+      <div class="card numero"><div class="v" data-fig="contador" data-alvo="8" data-atraso=".5" data-dur=".9">8</div><div class="r">tabelas, uma só para os registros de todas as áreas</div></div>
+      <div class="card numero"><div class="v" data-fig="contador" data-alvo="6" data-atraso=".7" data-dur=".9">6</div><div class="r">gatilhos com regras de negócio</div></div>
+      <div class="card numero"><div class="v" data-fig="contador" data-alvo="7" data-atraso=".9" data-dur=".9">7</div><div class="r">índices criados: 4 medidos sem e com, e o custo de todos</div></div>
+      <div class="card numero"><div class="v" data-fig="contador" data-alvo="38" data-atraso="1.1" data-dur="1.4">38</div><div class="r">testes executados, os mesmos .sql no terminal e no sistema</div></div>
     </div>
   </div>
 </section>
@@ -112,19 +141,19 @@
   <div class="cab ent e1"><b>06</b>Restrições</div>
   <h2 class="ent e2">Restrições que fecham as portas do <em>prontuário espalhado</em></h2>
   <div class="cards2">
-    <div class="card ent e3"><h4>Uma ficha por pessoa</h4>
+    <div class="card ent e3"><div class="carimbo">23505<small>RECUSADO</small></div><h4>Uma ficha por pessoa</h4>
       <div class="codigo">UNIQUE (cpf)
 CHECK (cpf_valido(cpf))  -- dígito verificador</div>
       <p>Segunda ficha da Dona Maria: recusada. Dígito trocado: recusado.</p><p class="prova">T07 23505 · T08 23514</p></div>
-    <div class="card" data-k="1"><h4>A folha não cai na pasta errada</h4>
+    <div class="card" data-k="1"><div class="carimbo">23503<small>RECUSADO</small></div><h4>A folha não cai na pasta errada</h4>
       <div class="codigo">FOREIGN KEY (atendimento_id, paciente_id)
   REFERENCES atendimento (id, paciente_id)</div>
       <p>Evolução do José na ficha da Maria: recusada.</p><p class="prova">T14 23503 · fk_registro_atendimento</p></div>
-    <div class="card" data-k="2"><h4>Regra dentro do JSON</h4>
+    <div class="card" data-k="2"><div class="carimbo">23514<small>RECUSADO</small></div><h4>Regra dentro do JSON</h4>
       <div class="codigo">CHECK ((medidas->>'dor')::numeric
        BETWEEN 0 AND 10)</div>
       <p>Dor anotada como 15: recusada, com o nome da regra.</p><p class="prova">T16 23514 · ck_registro_dor</p></div>
-    <div class="card" data-k="3"><h4>Uma alergia ativa por substância</h4>
+    <div class="card" data-k="3"><div class="carimbo">23505<small>RECUSADO</small></div><h4>Uma alergia ativa por substância</h4>
       <div class="codigo">UNIQUE INDEX ON alergia
   (paciente_id, normalizar(substancia)) WHERE ativa</div>
       <p>"dipirona" de novo: recusada. Desativada por engano: pode voltar.</p><p class="prova">T17 23505 · T18 aceito</p></div>
@@ -142,7 +171,15 @@ CHECK (cpf_valido(cpf))  -- dígito verificador</div>
       <div class="regra"><div class="ic">⏱️</div><div><b>A hora é a do servidor</b><span>Ninguém lança "ontem" para cobrir esquecimento.</span><span class="prova">T28</span></div></div>
       <div class="regra"><div class="ic">🚫</div><div><b>Sem evolução em falta ou por quem saiu</b><span>Atendimento com falta e profissional desligado não escrevem.</span><span class="prova">T26 · T27</span></div></div>
     </div>
-    <img class="tela ent e4" src="../evidencias/05-retificacao-escuro.png" alt="Retificação: original riscado e correção por cima">
+    <div class="lado-direito">
+      <div class="terminal ent e3" data-fig="terminal">
+        <div class="barra-term"><i></i><i></i><i></i><span>psql · prontuário</span></div>
+<pre><span class="pr">ciclo=#</span> <span data-linha="cmd" data-inicio="1.0">DELETE FROM registro_clinico WHERE paciente_id = 1;</span>
+<span class="erro" data-linha="resp" data-inicio="3.3">ERRO: DELETE em registro_clinico não é permitido: o prontuário guarda a história inteira.</span>
+<span class="dica" data-linha="resp" data-inicio="3.5">DICA: para corrigir um registro, crie uma retificação (retifica_id).</span></pre>
+      </div>
+      <img class="tela ent e5" src="../evidencias/05-retificacao-escuro.png" alt="Retificação: original riscado e correção por cima">
+    </div>
   </div>
 </section>
 
@@ -168,19 +205,19 @@ CHECK (cpf_valido(cpf))  -- dígito verificador</div>
     <div class="exp"><div class="nome"><b>Abrir a linha do tempo</b><span>(paciente_id, criado_em DESC)</span></div>
       <div class="par"><div class="linha-b"><div class="trilho"><i style="--w:100%"></i></div><span class="ms">9,24 ms</span></div>
         <div class="linha-b com"><div class="trilho com"><i style="--w:0.96%"></i></div><span class="ms">0,089 ms</span></div></div>
-      <div class="ganho">104×<small>Seq Scan → Index Scan</small></div></div>
+      <div class="ganho"><span data-fig="contador" data-alvo="104" data-atraso="2.4" data-dur=".9">104</span>×<small>Seq Scan → Index Scan</small></div></div>
     <div class="exp"><div class="nome"><b>Buscar pelo nome, sem acento</b><span>GIN + pg_trgm</span></div>
       <div class="par"><div class="linha-b"><div class="trilho"><i style="--w:100%"></i></div><span class="ms">36,54 ms</span></div>
         <div class="linha-b com"><div class="trilho com"><i style="--w:1.41%"></i></div><span class="ms">0,516 ms</span></div></div>
-      <div class="ganho">71×<small>Seq Scan → Bitmap Index</small></div></div>
+      <div class="ganho"><span data-fig="contador" data-alvo="71" data-atraso="2.5" data-dur=".9">71</span>×<small>Seq Scan → Bitmap Index</small></div></div>
     <div class="exp"><div class="nome"><b>Quem abriu este prontuário</b><span>(paciente_id, momento DESC)</span></div>
       <div class="par"><div class="linha-b"><div class="trilho"><i style="--w:100%"></i></div><span class="ms">14,52 ms</span></div>
         <div class="linha-b com"><div class="trilho com"><i style="--w:0.25%"></i></div><span class="ms">0,036 ms</span></div></div>
-      <div class="ganho">403×<small>Seq Scan → Index Scan</small></div></div>
+      <div class="ganho"><span data-fig="contador" data-alvo="403" data-atraso="2.6" data-dur=".9">403</span>×<small>Seq Scan → Index Scan</small></div></div>
     <div class="exp"><div class="nome"><b>Agenda do dia</b><span>(profissional_id, inicio)</span></div>
       <div class="par"><div class="linha-b"><div class="trilho"><i style="--w:100%"></i></div><span class="ms">2,29 ms</span></div>
         <div class="linha-b com"><div class="trilho com"><i style="--w:1.79%"></i></div><span class="ms">0,041 ms</span></div></div>
-      <div class="ganho">56×<small>outro índice → o próprio</small></div></div>
+      <div class="ganho"><span data-fig="contador" data-alvo="56" data-atraso="2.7" data-dur=".9">56</span>×<small>outro índice → o próprio</small></div></div>
   </div>
   <p class="nota ent e5" style="margin-top:3.4rem">Tempo do próprio PostgreSQL (EXPLAIN ANALYZE), mediana de 15 execuções, 180.239 registros. O custo também foi medido: o índice da linha do tempo ocupa 5,43 MB (a tabela, 28,89 MB).</p>
 </section>
@@ -193,15 +230,15 @@ CHECK (cpf_valido(cpf))  -- dígito verificador</div>
     <div class="exp"><div class="nome"><b>22.457 registros</b><span>1.250 pacientes</span></div>
       <div class="par"><div class="linha-b"><div class="trilho"><i style="--w:5.2%"></i></div><span class="ms">1,14 ms</span></div>
         <div class="linha-b com"><div class="trilho com"><i style="--w:0.22%"></i></div><span class="ms">0,048 ms</span></div></div>
-      <div class="ganho">24×</div></div>
+      <div class="ganho"><span data-fig="contador" data-alvo="24" data-atraso="2.4" data-dur=".8">24</span>×</div></div>
     <div class="exp"><div class="nome"><b>90.171 registros</b><span>5.000 pacientes</span></div>
       <div class="par"><div class="linha-b"><div class="trilho"><i style="--w:21.4%"></i></div><span class="ms">4,70 ms</span></div>
         <div class="linha-b com"><div class="trilho com"><i style="--w:0.19%"></i></div><span class="ms">0,041 ms</span></div></div>
-      <div class="ganho">115×</div></div>
+      <div class="ganho"><span data-fig="contador" data-alvo="115" data-atraso="2.5" data-dur=".8">115</span>×</div></div>
     <div class="exp"><div class="nome"><b>360.051 registros</b><span>20.000 pacientes</span></div>
       <div class="par"><div class="linha-b"><div class="trilho"><i style="--w:100%"></i></div><span class="ms">22,01 ms</span></div>
         <div class="linha-b com"><div class="trilho com"><i style="--w:0.2%"></i></div><span class="ms">0,044 ms</span></div></div>
-      <div class="ganho">500×</div></div>
+      <div class="ganho"><span data-fig="contador" data-alvo="500" data-atraso="2.6" data-dur=".8">500</span>×</div></div>
   </div>
   <div class="msg ent e5" style="margin-top:4.5rem"><span>16 vezes mais registros: sem índice, o tempo subiu 19 vezes. <b>Com índice, ficou parado em 0,04 ms.</b></span></div>
 </section>
@@ -211,7 +248,15 @@ CHECK (cpf_valido(cpf))  -- dígito verificador</div>
   <div class="cab ent e1"><b>11</b>Resultados</div>
   <h2 class="ent e2">Toda afirmação, <em>um teste executado</em></h2>
   <div class="grade">
-    <div class="placar ent e3">38<small>/38</small></div>
+    <div class="ent e3">
+      <div class="placar"><span data-fig="contador" data-alvo="38" data-atraso=".35" data-dur="2.1">38</span><small>/38</small></div>
+      <div class="bolinhas" aria-label="38 testes, um ponto por teste">
+        <i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i>
+        <i style="--i:10"></i><i style="--i:11"></i><i style="--i:12"></i><i style="--i:13"></i><i style="--i:14"></i><i style="--i:15"></i><i style="--i:16"></i><i style="--i:17"></i><i style="--i:18"></i><i style="--i:19"></i>
+        <i style="--i:20"></i><i style="--i:21"></i><i style="--i:22"></i><i style="--i:23"></i><i style="--i:24"></i><i style="--i:25"></i><i style="--i:26"></i><i style="--i:27"></i><i style="--i:28"></i><i style="--i:29"></i>
+        <i style="--i:30"></i><i style="--i:31"></i><i style="--i:32"></i><i style="--i:33"></i><i style="--i:34"></i><i style="--i:35"></i><i style="--i:36"></i><i style="--i:37"></i>
+      </div>
+    </div>
     <div class="grupos encadeia">
       <div class="card grupo"><div class="v">6</div><div class="r">tipos de dados</div></div>
       <div class="card grupo"><div class="v">13</div><div class="r">restrições de integridade</div></div>
@@ -225,7 +270,7 @@ CHECK (cpf_valido(cpf))  -- dígito verificador</div>
 <!-- 13 · DEMONSTRAÇÃO -->
 <section class="slide s-demo" data-sec="Demonstração" data-titulo="Agora, no sistema">
   <div class="cab ent e1"><b>12</b>Demonstração</div>
-  <h2 class="ent e2">Agora, <em>no sistema</em></h2>
+  <h2 class="ent e2">Agora, <em>no sistema</em><span class="ao-vivo"><i></i>ao vivo</span></h2>
   <div class="grade">
     <div class="roteiro ent e3"><ol>
       <li>A fisio Camila abre a agenda: Dona Maria está em atendimento.</li>
@@ -278,6 +323,9 @@ CHECK (cpf_valido(cpf))  -- dígito verificador</div>
 
 <!-- 16 · FIM -->
 <section class="slide s-fim" data-sec="Obrigado" data-titulo="Obrigado">
+  <div class="aurora"><i></i><i></i><i></i></div>
+  <div class="feixe"></div>
+  <div class="marca-gigante" aria-hidden="true">Ciclo</div>
   <svg class="logo-ciclo ent e1" viewBox="0 0 100 100" aria-hidden="true">
     <path class="arco ae" d="M 48 12.05 A 38 38 0 0 0 48 87.95"/><path class="arco ad" d="M 52 12.05 A 38 38 0 0 1 52 87.95"/>
     <circle class="centro" cx="50" cy="50" r="6"/><g class="giro"><circle class="orb" cx="50" cy="12" r="5"/></g>
@@ -299,6 +347,7 @@ CHECK (cpf_valido(cpf))  -- dígito verificador</div>
 <div id="laser"></div>
 <div id="preto"></div>
 
+<script src="figuras.js"></script>
 <script src="motor.js"></script>
 </body>
 </html>

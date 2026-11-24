@@ -216,3 +216,146 @@ html.pdf{font-size:7.2px}
 html.pdf,html.pdf body{height:auto;overflow:visible}
 html.pdf *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 html.pdf #palco{position:relative;left:0;top:0;transform:none;width:1280px;height:720px}
+
+/* =====================================================================
+   ANIMAÇÕES (24/11, 13h): efeitos inspirados nos modelos salvos no
+   21st.dev, refeitos em CSS puro para rodar sem internet.
+   No modo captura (?slide=N) as animações ficam desligadas e tudo
+   aparece no estado final.
+   ===================================================================== */
+
+/* troca de slide com leve aproximação */
+.slide{transform:scale(1.012)}
+.slide.ativo{transform:none;transition:opacity .6s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
+
+/* aurora de fundo e feixe de luz (capa e fim) */
+.aurora{position:absolute;inset:-25%;pointer-events:none;filter:blur(7rem);opacity:.6}
+.aurora i{position:absolute;border-radius:50%;animation:flutua 18s ease-in-out infinite alternate}
+.aurora i:nth-child(1){width:70rem;height:70rem;left:48%;top:8%;background:radial-gradient(circle,rgba(58,140,232,.55),transparent 65%)}
+.aurora i:nth-child(2){width:60rem;height:60rem;left:66%;top:46%;background:radial-gradient(circle,rgba(91,202,224,.42),transparent 65%);animation-duration:23s;animation-delay:-7s}
+.aurora i:nth-child(3){width:52rem;height:52rem;left:8%;top:58%;background:radial-gradient(circle,rgba(232,154,120,.26),transparent 65%);animation-duration:27s;animation-delay:-12s}
+@keyframes flutua{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-9rem,6rem) scale(1.15)}100%{transform:translate(7rem,-5rem) scale(.94)}}
+.feixe{position:absolute;inset:-30% -20%;pointer-events:none;transform:translateX(70%);
+  background:linear-gradient(112deg,transparent 43%,rgba(91,202,224,.08) 47.5%,rgba(244,248,254,.13) 50%,rgba(91,202,224,.08) 52.5%,transparent 57%);
+  animation:varre 10s ease-in-out infinite}
+@keyframes varre{0%{transform:translateX(-55%)}55%,100%{transform:translateX(70%)}}
+
+/* 1 · capa: as especialidades orbitando um prontuário */
+.s-capa h1{max-width:90rem}
+.s-capa .sub{max-width:86rem}
+.s-capa>*:not(.aurora):not(.feixe):not(.orbita-capa){position:relative;z-index:1}
+.orbita-capa{position:absolute;right:6rem;top:50%;width:66rem;height:66rem;margin-top:-35rem;z-index:1}
+.orbita-capa .trilha{position:absolute;left:50%;top:50%;border-radius:50%;border:.18rem dashed rgba(91,202,224,.22);animation:orbita var(--dur) linear infinite}
+.orbita-capa .a1{width:40rem;height:40rem;margin:-20rem 0 0 -20rem;--raio:20rem;--dur:38s}
+.orbita-capa .a2{width:62rem;height:62rem;margin:-31rem 0 0 -31rem;--raio:31rem;--dur:56s;animation-direction:reverse}
+.orbita-capa .esp{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--a)) translateX(var(--raio)) rotate(calc(-1 * var(--a)))}
+.orbita-capa .esp b{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:1rem;white-space:nowrap;
+  padding:1rem 1.8rem;border-radius:5rem;background:rgba(26,49,73,.92);border:.18rem solid var(--c);color:var(--tinta);font:600 2.2rem/1 'Geist';
+  box-shadow:0 0 2.6rem -0.6rem var(--c)}
+/* o rótulo gira ao contrário do anel e fica sempre de pé */
+.orbita-capa .esp .gira{position:absolute;left:0;top:0;width:0;height:0;animation:orbita var(--dur) linear infinite reverse}
+.orbita-capa .a2 .esp .gira{animation-direction:normal}
+.orbita-capa .esp b::before{content:"";width:1.2rem;height:1.2rem;border-radius:50%;background:var(--c)}
+.orbita-capa .nucleo{position:absolute;left:50%;top:50%;width:24rem;height:24rem;margin:-12rem 0 0 -12rem;border-radius:50%;
+  display:grid;place-items:center;background:radial-gradient(circle,rgba(58,140,232,.28),rgba(15,34,56,.2) 70%);box-shadow:0 0 8rem rgba(58,140,232,.35)}
+.orbita-capa .nucleo .logo-ciclo{position:static;width:15rem;height:15rem;margin:0}
+.orbita-capa .nucleo span{position:absolute;bottom:-5.4rem;left:50%;transform:translateX(-50%);white-space:nowrap;font:700 2rem/1 'Geist';letter-spacing:.16em;text-transform:uppercase;color:var(--ciano)}
+.orbita-capa .pulso{position:absolute;left:50%;top:50%;width:24rem;height:24rem;margin:-12rem 0 0 -12rem;border-radius:50%;border:.3rem solid rgba(91,202,224,.5);opacity:0;animation:pulsa 3.2s ease-out infinite}
+.orbita-capa .pulso.p2{animation-delay:1.6s}
+@keyframes pulsa{0%{transform:scale(.9);opacity:.7}100%{transform:scale(2.7);opacity:0}}
+
+/* 2 · as fichas entram em leque e depois viram um prontuário só */
+.s-situacao .fichas{position:relative}
+.s-situacao .ficha{transition:transform 1s cubic-bezier(.2,.8,.25,1.25),opacity .7s ease}
+.s-situacao .fichas:not(.vis) .ficha{transform:translateY(8rem) rotate(0deg) scale(.86)}
+.s-situacao .fichas .ficha:nth-child(2){transition-delay:.1s}
+.s-situacao .fichas .ficha:nth-child(3){transition-delay:.2s}
+.s-situacao[data-passo="3"] .ficha{opacity:0;transition-delay:0s}
+.s-situacao[data-passo="3"] .ficha:nth-child(1){transform:translateX(32rem) scale(.55) rotate(6deg)}
+.s-situacao[data-passo="3"] .ficha:nth-child(2){transform:scale(.55)}
+.s-situacao[data-passo="3"] .ficha:nth-child(3){transform:translateX(-32rem) scale(.55) rotate(-6deg)}
+.unico{position:absolute;left:50%;top:0;width:58rem;margin-left:-29rem;padding:2.6rem 3rem;border-radius:2.4rem;
+  background:linear-gradient(160deg,#1F3B58,#162D46);border:.2rem solid rgba(91,202,224,.55);box-shadow:0 0 7rem -1rem rgba(91,202,224,.45);
+  opacity:0;transform:scale(.7);transition:opacity .6s ease,transform .9s cubic-bezier(.2,.8,.25,1.2);pointer-events:none}
+.s-situacao[data-passo="3"] .unico{opacity:1;transform:none;transition-delay:.45s}
+.unico .topo-u{display:flex;align-items:center;gap:1.4rem;font:700 1.9rem/1 'Geist';letter-spacing:.16em;text-transform:uppercase;color:var(--ciano);margin-bottom:1.6rem}
+.unico .topo-u svg{width:3.6rem;height:3.6rem}
+.unico h4{margin:0 0 .4rem;font:700 3.2rem/1.1 'Geist'}
+.unico .cpf{font:500 2.1rem/1.3 'Geist Mono';color:var(--suave)}
+.unico .al{margin:1.6rem 0;padding:1.2rem 1.6rem;border-radius:1.2rem;background:rgba(240,122,122,.14);border:.15rem solid rgba(240,122,122,.5);font:600 2.3rem/1.3 'Geist'}
+.unico .al b{color:var(--perigo);letter-spacing:.06em}
+.unico .chips{display:flex;flex-wrap:wrap;gap:1rem}
+.unico .chips span{padding:.7rem 1.4rem;border-radius:4rem;font:600 1.9rem/1 'Geist';color:var(--c);border:.15rem solid var(--c)}
+.s-situacao .msg .depois{display:none}
+.s-situacao[data-passo="3"] .msg .antes{display:none}
+.s-situacao[data-passo="3"] .msg .depois{display:inline;animation:sobe .6s ease-out .5s both}
+
+/* 3 · cartões que viram: a causa de um lado, a regra do banco do outro */
+.causas{display:grid;gap:2rem;margin-top:4.2rem}
+.virar[data-k]{opacity:1;transform:none}
+.virar{perspective:180rem;height:12.8rem}
+.slide.ativo .virar{animation:sobe .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(.25s + var(--i) * .12s)}
+@keyframes sobe{from{opacity:0;transform:translateY(2.4rem)}}
+.virar .miolo{position:relative;height:100%;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.3,.7,.2,1.12)}
+.virar.vis .miolo{transform:rotateX(180deg)}
+.virar .face{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 3.6rem;border-radius:2rem;
+  -webkit-backface-visibility:hidden;backface-visibility:hidden;font-size:3rem;line-height:1.28}
+.virar .frente{background:linear-gradient(90deg,rgba(232,154,120,.16),rgba(232,154,120,.05));border:.15rem solid rgba(232,154,120,.4)}
+.virar .verso{background:linear-gradient(90deg,rgba(95,195,136,.2),rgba(95,195,136,.06));border:.15rem solid rgba(95,195,136,.5);transform:rotateX(180deg)}
+.virar small{display:block;font:700 1.8rem/1 'Geist';letter-spacing:.14em;text-transform:uppercase;margin-bottom:1rem}
+.virar .frente small{color:var(--quente)} .virar .verso small{color:var(--menta)}
+
+/* 6 · cartões com brilho de fundo */
+.s-tipos .card{position:relative;overflow:hidden}
+.s-tipos .card::after{content:"";position:absolute;right:-18%;bottom:-70%;width:70%;height:130%;transform:skewX(-16deg);
+  background:linear-gradient(135deg,var(--azul),var(--ciano));filter:blur(5rem);opacity:.2;pointer-events:none}
+.s-tipos .card>*{position:relative}
+
+/* 7 · carimbo RECUSADO */
+.s-restr .card{position:relative}
+.carimbo{position:absolute;right:2.4rem;top:2rem;transform:rotate(-7deg);padding:.7rem 1.4rem;border:.35rem solid var(--perigo);border-radius:1rem;
+  color:var(--perigo);font:800 1.9rem/1.1 'Geist Mono';letter-spacing:.06em;text-align:center;opacity:.92;background:rgba(240,122,122,.06)}
+.carimbo small{display:block;font:700 1.4rem/1.2 'Geist';letter-spacing:.2em}
+.slide.ativo .card.ent .carimbo{animation:carimbar .45s cubic-bezier(.3,1.6,.5,1) 1.1s both}
+.card[data-k].vis .carimbo{animation:carimbar .45s cubic-bezier(.3,1.6,.5,1) .55s both}
+@keyframes carimbar{from{opacity:0;transform:rotate(-7deg) scale(2.4)}}
+
+/* 8 · terminal que digita */
+.lado-direito{display:grid;gap:2.4rem}
+.terminal{border-radius:1.8rem;overflow:hidden;border:.2rem solid var(--linha);background:#08131F;box-shadow:0 3rem 7rem -3rem rgba(0,0,0,.8)}
+.terminal .barra-term{display:flex;align-items:center;gap:1rem;padding:1.2rem 1.8rem;background:#0F1F31;font:600 1.8rem/1 'Geist Mono';color:var(--apagado)}
+.terminal .barra-term i{width:1.3rem;height:1.3rem;border-radius:50%;background:#2D4669}
+.terminal .barra-term i:nth-child(1){background:#F07A7A}.terminal .barra-term i:nth-child(2){background:#E8C25A}.terminal .barra-term i:nth-child(3){background:#5FC388}
+.terminal .barra-term span{margin-left:1rem}
+.terminal pre{margin:0;padding:2rem 2.4rem;font:500 2.05rem/1.55 'Geist Mono';white-space:pre-wrap;word-break:break-word;min-height:21rem;color:var(--tinta)}
+.terminal .pr{color:var(--menta)}
+.terminal .erro{color:var(--perigo);font-weight:600}
+.terminal .dica{color:var(--ouro)}
+.terminal .digitando::after{content:"▌";color:var(--ciano);animation:pisca .8s steps(2) infinite}
+@keyframes pisca{50%{opacity:0}}
+
+/* 10 e 11 · sem índice demora, com índice é instantâneo */
+.trilho i{transition:width 2.6s cubic-bezier(.35,.1,.3,1) .35s}
+.trilho.com i{transition:width .3s ease-out .35s}
+.slide.ativo .trilho.com i{animation:clarao 1s ease-out .55s both}
+@keyframes clarao{0%{box-shadow:0 0 0 0 rgba(95,195,136,0)}30%{box-shadow:0 0 2.4rem .6rem rgba(95,195,136,.75)}100%{box-shadow:0 0 0 0 rgba(95,195,136,0)}}
+
+/* 12 · 38 bolinhas acendendo, uma por teste */
+.bolinhas{display:grid;grid-template-columns:repeat(19,1fr);gap:1rem;margin-top:3.4rem;max-width:58rem}
+.bolinhas i{aspect-ratio:1;border-radius:50%;background:var(--menta);box-shadow:0 0 1.2rem rgba(95,195,136,.55)}
+.slide.ativo .bolinhas i{animation:acende .35s ease-out both;animation-delay:calc(.35s + var(--i) * .055s)}
+@keyframes acende{from{background:rgba(255,255,255,.09);box-shadow:none;transform:scale(.55)}}
+.slide.ativo.s-result .grupo{animation:brilho 1.2s ease-out 2.6s both}
+@keyframes brilho{0%{box-shadow:0 0 0 0 rgba(91,202,224,0)}40%{box-shadow:0 0 3rem .2rem rgba(91,202,224,.45)}100%{box-shadow:0 2rem 5rem -3rem rgba(0,0,0,.6)}}
+
+/* 13 · ao vivo */
+.ao-vivo{display:inline-flex;align-items:center;gap:1.2rem;margin-left:2.4rem;vertical-align:middle;padding:1rem 2rem;border-radius:4rem;
+  background:rgba(240,122,122,.14);border:.18rem solid rgba(240,122,122,.5);font:700 2.2rem/1 'Geist';letter-spacing:.16em;text-transform:uppercase;color:var(--perigo)}
+.ao-vivo i{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--perigo);animation:vivo 1.4s ease-in-out infinite}
+@keyframes vivo{0%,100%{box-shadow:0 0 0 0 rgba(240,122,122,.7)}50%{box-shadow:0 0 0 1.2rem rgba(240,122,122,0)}}
+
+/* 16 · fim: feixe de luz e a marca gigante */
+.s-fim>*:not(.aurora):not(.feixe):not(.marca-gigante):not(.logo-ciclo){position:relative;z-index:1}
+.s-fim .logo-ciclo{z-index:1}
+.marca-gigante{position:absolute;left:50%;bottom:-10rem;transform:translateX(-50%);font:800 46rem/.8 'Geist';letter-spacing:-.07em;white-space:nowrap;
+  color:transparent;background:linear-gradient(180deg,rgba(91,202,224,.26),rgba(91,202,224,0) 78%);-webkit-background-clip:text;background-clip:text;pointer-events:none}

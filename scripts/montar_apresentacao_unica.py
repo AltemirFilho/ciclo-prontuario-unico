@@ -20,6 +20,7 @@ SAIDA = Path(sys.argv[1])
 html = (DECK / 'index.html').read_text(encoding='utf-8')
 css = (DECK / 'estilo.css').read_text(encoding='utf-8')
 motor = (DECK / 'motor.js').read_text(encoding='utf-8')
+figuras = (DECK / 'figuras.js').read_text(encoding='utf-8')
 
 
 def dado(caminho, tipo):
@@ -45,11 +46,12 @@ def embutir(m):
 html = re.sub(r'src="(\.\./evidencias/[^"]+\.png)"', embutir, html)
 html = html.replace('<link rel="stylesheet" href="estilo.css">', f'<style>\n{css}\n</style>')
 html = html.replace('<script src="motor.js"></script>', f'<script>\n{motor}\n</script>')
+html = html.replace('<script src="figuras.js"></script>', f'<script>\n{figuras}\n</script>')
 # o link relativo do sistema vira o endereço do servidor local (INICIAR.bat)
 html = html.replace('href="../../app/?quem=camila"', 'href="http://localhost:4517/app/?quem=camila"')
 html = html.replace('<small>mesma pasta da apresentação</small>', '<small>localhost:4517 (com o INICIAR.bat aberto)</small>')
 
-assert 'href="estilo.css"' not in html and 'src="motor.js"' not in html and '../evidencias' not in html
+assert 'href="estilo.css"' not in html and 'src="motor.js"' not in html and 'src="figuras.js"' not in html and '../evidencias' not in html
 SAIDA.parent.mkdir(parents=True, exist_ok=True)
 SAIDA.write_text(html, encoding='utf-8')
 print(f'{SAIDA} ({SAIDA.stat().st_size / 1024 / 1024:.1f} MB)')
