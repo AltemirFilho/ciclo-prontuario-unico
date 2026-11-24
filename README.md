@@ -12,6 +12,7 @@ Dupla: **Altemir Cruz da Silva Filho** e **Juscelino Santos de Andrade**
 | Apresentação | https://altemirfilho.github.io/ciclo-prontuario-unico/docs/apresentacao/ |
 | Artigo (SBC) | [`docs/artigo/`](docs/artigo/) |
 | Resultados dos testes | [`testes/resultados/RESULTADOS.md`](testes/resultados/RESULTADOS.md) |
+| Tour do projeto | https://altemirfilho.github.io/ciclo-prontuario-unico/docs/estudo/tour.html |
 | Guia de estudo | [`docs/estudo/GUIA_DE_ESTUDO.md`](docs/estudo/GUIA_DE_ESTUDO.md) |
 | Metodologia ágil | [`docs/metodologia/METODOLOGIA_AGIL.md`](docs/metodologia/METODOLOGIA_AGIL.md) |
 

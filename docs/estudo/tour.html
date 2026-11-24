@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tour do projeto · Ciclo Prontuário Único</title>
+<style>
+@font-face{font-family:'Geist';src:url('../apresentacao/fontes/geist.woff2') format('woff2');font-weight:100 900}
+@font-face{font-family:'Geist Mono';src:url('../apresentacao/fontes/geist-mono.woff2') format('woff2');font-weight:100 900}
+:root{--bg:#0F2238;--bg2:#142944;--card:#1A3149;--card2:#23435E;--line:#2D4669;--ink:#F4F8FE;--soft:#B4C3D6;--muted:#8494A9;
+  --azul:#3A8CE8;--ciano:#5BCAE0;--quente:#E89A78;--menta:#5FC388;--perigo:#F07A7A;--ouro:#E8C25A}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1100px 500px at 85% -10%,rgba(58,140,232,.15),transparent 60%),var(--bg);color:var(--ink);font:17px/1.6 'Geist','Segoe UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--ciano)}
+code,.mono{font-family:'Geist Mono',Consolas,monospace;font-size:.88em}
+code{background:rgba(91,202,224,.1);color:var(--ciano);padding:.1em .45em;border-radius:6px}
+pre{background:#0B1A2C;border:1px solid var(--line);border-radius:12px;padding:14px 16px;overflow:auto;font:13.5px/1.55 'Geist Mono',Consolas,monospace;color:var(--ink);margin:12px 0}
+.topo{position:sticky;top:0;z-index:5;background:rgba(15,34,56,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topo .dentro{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;overflow-x:auto;scrollbar-width:none}
+.topo .dentro::-webkit-scrollbar{display:none}
+.topo b{white-space:nowrap;margin-right:6px}
+.topo a{white-space:nowrap;text-decoration:none;color:var(--soft);font-size:14px;padding:5px 10px;border-radius:999px;border:1px solid var(--line)}
+.topo a:hover{color:var(--ink);border-color:var(--ciano)}
+main{max-width:1100px;margin:0 auto;padding:28px 16px 80px}
+.capa h1{font-size:clamp(30px,5vw,48px);line-height:1.08;letter-spacing:-.03em;margin:8px 0 12px}
+.capa h1 em{font-style:normal;color:var(--ciano)}
+.capa p{color:var(--soft);max-width:760px;font-size:18px}
+.rot{font:700 13px/1 'Geist';letter-spacing:.16em;text-transform:uppercase;color:var(--ciano)}
+.mapa{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:24px 0 8px}
+.peca{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;text-decoration:none;color:var(--ink);display:block}
+.peca:hover{border-color:var(--ciano)}
+.peca b{display:block;font-size:17px;margin-bottom:2px}
+.peca span{color:var(--muted);font-size:14.5px;line-height:1.45;display:block}
+.peca .n{font:800 13px/1 'Geist';color:var(--quente);letter-spacing:.1em}
+section.parada{margin-top:64px;scroll-margin-top:70px}
+.parada h2{font-size:clamp(24px,3.4vw,34px);letter-spacing:-.02em;line-height:1.15;margin:6px 0 10px}
+.parada h2 em{font-style:normal;color:var(--ciano)}
+.parada .lead{color:var(--soft);font-size:18px;max-width:820px}
+.duas{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;margin-top:18px;align-items:start}
+.tela{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 20px 50px -25px rgba(0,0,0,.8);display:block}
+.legenda{font-size:13.5px;color:var(--muted);margin-top:6px}
+.caixa{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:14px}
+.caixa h3{margin:0 0 8px;font-size:16px;letter-spacing:.02em}
+.caixa ul{margin:0;padding-left:20px}
+.caixa li{margin:5px 0;color:var(--soft)}
+.caixa li b{color:var(--ink)}
+.caixa.onde{border-left:4px solid var(--azul)}
+.caixa.prova{border-left:4px solid var(--menta)}
+.caixa.porque{border-left:4px solid var(--quente)}
+.caixa.mostra{border-left:4px solid var(--ciano)}
+.botoes{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.botao{display:inline-block;text-decoration:none;background:var(--azul);color:#fff;font-weight:600;padding:10px 16px;border-radius:12px}
+.botao.sec{background:var(--card2);color:var(--ink);border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td.num{font-family:'Geist Mono',monospace;white-space:nowrap}
+.ok{color:var(--menta);font-weight:700}
+.tabela-rolagem{overflow-x:auto}
+.fluxo{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:16px 0}
+.fluxo span{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:14.5px}
+.fluxo i{font-style:normal;color:var(--muted)}
+.check{list-style:none;padding:0;margin:12px 0}
+.check li{padding:10px 12px 10px 42px;position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;margin:8px 0;color:var(--soft)}
+.check li::before{content:'';position:absolute;left:14px;top:13px;width:16px;height:16px;border-radius:5px;border:2px solid var(--ciano)}
+.check li b{color:var(--ink)}
+kbd{font-family:'Geist Mono',monospace;font-size:13px;background:var(--card2);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px}
+footer{margin-top:70px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:16px}
+.duas>*,.mapa>*{min-width:0}
+code{overflow-wrap:anywhere}
+pre{max-width:100%}
+@media (max-width:820px){.duas{grid-template-columns:1fr}body{font-size:16px}}
+</style>
+</head>
+<body>
+
+<nav class="topo"><div class="dentro">
+  <b>Tour</b>
+  <a href="#mapa">Mapa</a><a href="#problema">1 Problema</a><a href="#banco">2 Banco</a><a href="#tipos">3 Tipos</a>
+  <a href="#restricoes">4 Restrições</a><a href="#gatilhos">5 Gatilhos</a><a href="#leitura">6 Leitura e LGPD</a>
+  <a href="#indices">7 Índices</a><a href="#testes">8 Testes</a><a href="#sistema">9 Sistema</a><a href="#artigo">10 Artigo</a>
+  <a href="#slides">11 Slides</a><a href="#github">12 GitHub</a><a href="#dia">13 No dia</a>
+</div></nav>
+
+<main>
+<div class="capa" id="mapa">
+  <p class="rot">Tour do projeto · para estudar antes das 15h10</p>
+  <h1>Tudo o que foi feito, <em>parada por parada</em></h1>
+  <p>Cada parada mostra a tela de verdade, explica o que é, onde está o arquivo, como funciona por dentro e qual teste prova. Os botões abrem o sistema e os slides de verdade.</p>
+
+  <div class="mapa">
+    <a class="peca" href="#banco"><span class="n">O CORAÇÃO</span><b>O banco</b><span>8 tabelas, regras e índices em <code>banco/</code>, um arquivo por assunto</span></a>
+    <a class="peca" href="#testes"><span class="n">A PROVA</span><b>38 testes + 4 índices</b><span>Rodam no terminal e no sistema; o resultado vira JSON</span></a>
+    <a class="peca" href="#sistema"><span class="n">A DEMONSTRAÇÃO</span><b>O sistema</b><span>O PostgreSQL roda dentro do navegador, no ar e no notebook</span></a>
+    <a class="peca" href="#artigo"><span class="n">A ENTREGA</span><b>O artigo</b><span>Modelo SBC da UNIT, gerado a partir do resultado dos testes</span></a>
+    <a class="peca" href="#slides"><span class="n">OS 10 MINUTOS</span><b>A apresentação</b><span>16 slides no motor de sempre, com plano B e plano C</span></a>
+    <a class="peca" href="#github"><span class="n">O ACOMPANHAMENTO</span><b>O GitHub</b><span>16 histórias; a história só fecha quando o teste passa</span></a>
+  </div>
+
+  <div class="fluxo">
+    <span>Arquivos <code>banco/*.sql</code></span><i>→</i><span>testes no terminal</span><i>→</i><span>resultados <code>.json</code></span><i>→</i>
+    <span>artigo gerado</span><i>+</i><span>histórias fechadas no GitHub</span>
+  </div>
+  <p class="legenda">Os mesmos arquivos SQL montam o banco do sistema no navegador. Por isso o que o professor vê na tela é exatamente o que foi testado.</p>
+</div>
+
+<!-- 1 -->
+<section class="parada" id="problema">
+  <p class="rot">Parada 1</p>
+  <h2>O problema: a Dona Maria em <em>três fichas</em></h2>
+  <p class="lead">Numa clínica com várias especialidades, a ficha fica na sala de quem atendeu por último, e cada setor guarda a sua versão do paciente. O tema que vocês receberam ("prontuário espalhado") é isso.</p>
+  <div class="duas">
+    <div><img class="tela" src="../evidencias/17-antes-depois-escuro.png" alt="Antes e depois"><p class="legenda">Aba "Como funciona" do sistema.</p></div>
+    <div>
+      <div class="caixa porque"><h3>A história (fictícia, mas típica)</h3><ul>
+        <li>A médica anota a <b>alergia grave a dipirona</b> no consultório 1.</li>
+        <li>De manhã ela pede para a fisio <b>tirar a carga do joelho</b>.</li>
+        <li>À tarde, a fisio atende com a ficha do próprio setor: <b>sem a alergia e sem a mudança</b>.</li>
+        <li>A nutrição copiou a <b>dose antiga</b> do remédio.</li>
+        <li>O CPF foi anotado com <b>um dígito trocado</b>: para qualquer cadastro, são três pessoas.</li>
+      </ul></div>
+      <div class="caixa onde"><h3>As 4 causas, e a regra que resolve cada uma</h3><ul>
+        <li>Ficha presa na sala → <b>uma tabela de registros para todas as áreas</b></li>
+        <li>Segunda ficha da mesma pessoa → <b>CPF único e conferido + busca tolerante</b></li>
+        <li>Corrigir apagando → <b>nada se apaga, existe a retificação</b></li>
+        <li>Ninguém sabe quem leu → <b>auditoria de toda leitura e escrita</b></li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="parada" id="banco">
+  <p class="rot">Parada 2</p>
+  <h2>O banco por dentro: <em>8 tabelas</em></h2>
+  <p class="lead">A decisão central: <b>uma tabela só</b> (<code>registro_clinico</code>) para o que todas as especialidades escrevem. O que é comum vira coluna; o que muda por área (dor, peso, pressão) vai numa coluna JSONB chamada <code>medidas</code>.</p>
+  <img class="tela" src="../evidencias/18-modelo-banco-escuro.png" alt="Modelo do banco" style="margin-top:16px">
+  <div class="tabela-rolagem"><table>
+    <tr><th>Tabela</th><th>Para que serve</th></tr>
+    <tr><td><code>paciente</code></td><td>Uma ficha por pessoa. CPF único e com dígito conferido.</td></tr>
+    <tr><td><code>profissional</code> e <code>especialidade</code></td><td>Quem atende, com o registro no conselho (CRM, COREN, CREFITO, CRN, CRP).</td></tr>
+    <tr><td><code>atendimento</code></td><td>O encontro: paciente, profissional, <b>sala</b>, horário e situação. A sala virou só um dado.</td></tr>
+    <tr><td><code>registro_clinico</code></td><td>Tudo o que foi escrito no prontuário, de todas as áreas. Nunca se altera nem se apaga.</td></tr>
+    <tr><td><code>alergia</code> e <code>condicao</code></td><td>O que aparece no topo para todo mundo: alergias e problemas de saúde (CID-10).</td></tr>
+    <tr><td><code>acesso_prontuario</code></td><td>A auditoria: quem leu ou escreveu, e quando (LGPD).</td></tr>
+  </table></div>
+  <div class="caixa onde"><h3>Onde está</h3><ul>
+    <li><code>banco/01_tipos.sql</code> tipos · <code>02_funcoes.sql</code> validação do CPF · <code>03_tabelas.sql</code> tabelas e restrições</li>
+    <li><code>04_gatilhos.sql</code> regras · <code>05_indices.sql</code> índices · <code>06_visoes.sql</code> leitura (linha do tempo, busca, resumo)</li>
+    <li><code>07_dados_demo.sql</code> a clínica e os 6 pacientes com história · <code>08_volume.sql</code> três anos de dados sintéticos</li>
+  </ul></div>
+  <div class="caixa porque"><h3>Por que PostgreSQL rodando no navegador?</h3><ul>
+    <li>É o <b>PGlite</b>: o PostgreSQL 19 de verdade, compilado para WebAssembly. Roda no Node (testes) e no navegador (sistema) sem instalar nada.</li>
+    <li>Assim os <b>mesmos arquivos .sql</b> servem para testar e para demonstrar. A própria Ciclo já usa o PGlite nos testes dela.</li>
+  </ul></div>
+</section>
+
+<!-- 3 -->
+<section class="parada" id="tipos">
+  <p class="rot">Parada 3</p>
+  <h2>Tipos de dados: cada um <em>com motivo e teste</em></h2>
+  <div class="tabela-rolagem"><table>
+    <tr><th>Tipo</th><th>Situação real que ele evita</th><th>Teste</th></tr>
+    <tr><td><code>DATE</code></td><td>Nascimento "30/02" entrando no cadastro</td><td class="num">T01 · 22008</td></tr>
+    <tr><td><code>ENUM</code></td><td>"evol.", "Evolução" e "EV" convivendo</td><td class="num">T02 · 22P02</td></tr>
+    <tr><td><code>CHAR(11)</code></td><td>CPF com dígito a mais</td><td class="num">T03 · 22001</td></tr>
+    <tr><td><code>JSONB</code> + CHECK</td><td>Medida mal escrita; dor 15 numa escala de 0 a 10</td><td class="num">T04 · T16</td></tr>
+    <tr><td><code>TIMESTAMPTZ</code></td><td>Hora errada vinda de sistema em UTC (13h UTC = 10h em Aracaju)</td><td class="num">T05</td></tr>
+    <tr><td><code>IDENTITY</code></td><td>Dois setores criando fichas com o mesmo número</td><td class="num">T06 · 428C9</td></tr>
+  </table></div>
+  <div class="caixa porque"><h3>A regra de bolso</h3><ul>
+    <li><b>ENUM</b> para lista pequena e fechada (tipo de registro, gravidade, status).</li>
+    <li><b>Tabela</b> para catálogo que cresce (especialidade): especialidade nova entra com um INSERT.</li>
+  </ul></div>
+</section>
+
+<!-- 4 -->
+<section class="parada" id="restricoes">
+  <p class="rot">Parada 4</p>
+  <h2>Restrições que <em>fecham as portas</em> do espalhamento</h2>
+  <div class="duas">
+    <div>
+      <div class="caixa"><h3>1. Uma ficha por pessoa</h3>
+<pre>CONSTRAINT uq_paciente_cpf UNIQUE (cpf),
+CONSTRAINT ck_paciente_cpf CHECK (cpf_valido(cpf))</pre>
+        <p class="legenda">A função <code>cpf_valido</code> faz a conta do dígito verificador. Segunda ficha da Dona Maria: <b>23505</b> (T07). Dígito trocado: <b>23514</b> (T08).</p></div>
+      <div class="caixa"><h3>2. A folha não cai na pasta errada</h3>
+<pre>FOREIGN KEY (atendimento_id, paciente_id)
+  REFERENCES atendimento (id, paciente_id)</pre>
+        <p class="legenda">Chave estrangeira <b>composta</b>: o registro só entra se o atendimento for daquele paciente. Evolução do José na ficha da Maria: <b>23503</b> (T14).</p></div>
+    </div>
+    <div>
+      <div class="caixa"><h3>3. Regra dentro do JSON</h3>
+<pre>CHECK ((medidas->>'dor')::numeric BETWEEN 0 AND 10)</pre>
+        <p class="legenda">Dor 15 recusada com o nome da regra, <code>ck_registro_dor</code> (T16).</p></div>
+      <div class="caixa"><h3>4. Uma alergia ativa por substância</h3>
+<pre>CREATE UNIQUE INDEX uq_alergia_ativa
+  ON alergia (paciente_id, normalizar(substancia))
+  WHERE ativa;</pre>
+        <p class="legenda">Índice único <b>parcial</b>: "dipirona" repetida é recusada (T17); a alergia desativada pode voltar (T18).</p></div>
+      <img class="tela" src="../evidencias/02-erro-dor-escuro.png" alt="O banco recusa a dor 15" style="max-width:380px;margin-top:14px">
+      <p class="legenda">No sistema, a tela não valida nada: quem barra é o banco, e o erro aparece com o código.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="parada" id="gatilhos">
+  <p class="rot">Parada 5</p>
+  <h2>Gatilhos: o prontuário <em>não se apaga</em></h2>
+  <p class="lead">CHECK só olha a linha que está entrando. Quando a regra depende de outra tabela, ou proíbe uma operação inteira, entra o gatilho (trigger).</p>
+  <div class="duas">
+    <div>
+      <div class="caixa"><h3>As regras</h3><ul>
+        <li><b>UPDATE, DELETE e TRUNCATE bloqueados</b> no prontuário (T20, T21, T22 → <code>P0001</code>).</li>
+        <li><b>Retificação</b>: corrigir é escrever um registro novo que aponta para o original; só o autor, uma vez (T23, T24, T25).</li>
+        <li><b>A hora é a do servidor</b>: ninguém lança "ontem" (T28).</li>
+        <li><b>Sem evolução</b> em atendimento com falta ou por profissional desligado (T26, T27).</li>
+        <li><b>Toda escrita gera auditoria</b>, e a auditoria não se apaga (T29, T30).</li>
+      </ul></div>
+<pre>CREATE TRIGGER trg_registro_imutavel
+  BEFORE UPDATE OR DELETE ON registro_clinico
+  FOR EACH ROW EXECUTE FUNCTION bloquear_alteracao();</pre>
+    </div>
+    <div><img class="tela" src="../evidencias/05-retificacao-escuro.png" alt="Retificação"><p class="legenda">A retificação entra por cima; o original fica visível e riscado.</p>
+      <img class="tela" src="../evidencias/04-apagar-recusado-escuro.png" alt="Apagar recusado" style="margin-top:12px"><p class="legenda">O botão "Tentar apagar" do sistema mostra o gatilho barrando o DELETE.</p></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="parada" id="leitura">
+  <p class="rot">Parada 6</p>
+  <h2>Leitura, sigilo e <em>LGPD</em></h2>
+  <div class="duas">
+    <div><img class="tela" src="../evidencias/11-sigilo-escuro.png" alt="Sigilo da psicologia"><p class="legenda">O fisio do José vê que houve psicologia, mas não o conteúdo.</p></div>
+    <div>
+      <div class="caixa"><h3>linha_do_tempo(paciente, quem_lê)</h3><ul>
+        <li>Devolve <b>tudo, de todas as áreas</b>, do mais novo para o mais antigo (T31).</li>
+        <li><b>Registra a leitura</b> na auditoria (T32).</li>
+        <li>Esconde o conteúdo <b>sigiloso</b> de quem não é da especialidade autora (T33, T34). É função, e não visão, porque precisa saber quem está lendo.</li>
+      </ul></div>
+      <div class="caixa"><h3>Busca que acha quem já existe</h3><ul>
+        <li>"joao pedro conseicao" (sem acento e com erro) acha <b>João Pedro da Conceição</b> (T35), com <code>unaccent</code> + <code>pg_trgm</code>.</li>
+        <li>CPF com pontos e traço também acha (T36).</li>
+        <li>Antes de cadastrar, avisa: "parece que já existe ficha" (T37).</li>
+      </ul></div>
+      <img class="tela" src="../evidencias/08-busca-escuro.png" alt="Busca tolerante" style="max-width:380px;margin-top:12px">
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="parada" id="indices">
+  <p class="rot">Parada 7</p>
+  <h2>Índices: a mesma consulta, <em>sem e com</em></h2>
+  <p class="lead">Medido com <code>EXPLAIN ANALYZE</code> (o próprio PostgreSQL executa e informa o tempo), mediana de 15 execuções, com 180.239 registros.</p>
+  <div class="tabela-rolagem"><table>
+    <tr><th>Consulta</th><th>Índice</th><th>Sem</th><th>Com</th><th>Ganho</th></tr>
+    <tr><td>Abrir a linha do tempo</td><td><code>(paciente_id, criado_em DESC)</code></td><td class="num">9,24 ms</td><td class="num">0,089 ms</td><td class="num ok">104×</td></tr>
+    <tr><td>Buscar pelo nome</td><td><code>GIN + pg_trgm</code></td><td class="num">36,54 ms</td><td class="num">0,516 ms</td><td class="num ok">71×</td></tr>
+    <tr><td>Quem abriu a ficha</td><td><code>(paciente_id, momento DESC)</code></td><td class="num">14,52 ms</td><td class="num">0,036 ms</td><td class="num ok">403×</td></tr>
+    <tr><td>Agenda do dia</td><td><code>(profissional_id, inicio)</code></td><td class="num">2,29 ms</td><td class="num">0,041 ms</td><td class="num ok">56×</td></tr>
+  </table></div>
+  <div class="duas">
+    <div class="caixa"><h3>Escala: a frase mais forte do trabalho</h3><ul>
+      <li>22.457 registros: <b>1,14 ms</b> sem índice, 0,048 ms com.</li>
+      <li>90.171 registros: <b>4,70 ms</b> sem, 0,041 ms com.</li>
+      <li>360.051 registros: <b>22,01 ms</b> sem, 0,044 ms com.</li>
+      <li>16 vezes mais dados: sem índice o tempo subiu 19 vezes; <b>com índice ficou parado</b>.</li>
+    </ul></div>
+    <div class="caixa porque"><h3>Por que a ordem das colunas importa</h3><ul>
+      <li>Primeiro filtra pelo paciente; dentro dele, os registros já estão na ordem da data.</li>
+      <li>No plano: <code>Seq Scan + Sort</code> (lê 180 mil linhas e ordena) virou só <code>Index Scan</code>.</li>
+      <li><b>Custo medido:</b> esse índice ocupa 5,43 MB (a tabela, 28,89 MB). O da busca por nome ocupa quase 5 vezes a tabela de pacientes; vale porque evita a ficha duplicada.</li>
+      <li>A busca por CPF não precisou de índice novo: o <code>UNIQUE</code> já cria um (I5).</li>
+    </ul></div>
+  </div>
+  <img class="tela" src="../evidencias/13-indices-escuro.png" alt="Índices no laboratório" style="margin-top:16px">
+</section>
+
+<!-- 8 -->
+<section class="parada" id="testes">
+  <p class="rot">Parada 8</p>
+  <h2>Os testes: <em>38 de 38</em></h2>
+  <p class="lead">O professor disse que opinião sem teste não conta. Então cada afirmação do trabalho tem um teste executado, com o que se esperava e o que o banco respondeu.</p>
+  <div class="duas">
+    <div>
+      <div class="caixa"><h3>Como um teste funciona</h3><ul>
+        <li>Parte de uma <b>situação real</b> ("a recepção abre uma segunda ficha da Dona Maria").</li>
+        <li>Diz o que o banco deve fazer: <b>recusar</b> (com o código do erro e o nome da regra) ou <b>aceitar</b> (e uma consulta confere).</li>
+        <li>Roda dentro de <code>BEGIN ... ROLLBACK</code>: um teste nunca suja o banco para o outro.</li>
+        <li>Confere o <b>código e o nome da regra</b>: se fosse outra regra barrando, o teste falharia.</li>
+      </ul></div>
+<pre>{
+  id: 'T07', grupo: 'Restrição',
+  titulo: 'UNIQUE: o mesmo CPF não ganha segunda ficha',
+  sql: "INSERT INTO paciente ... '18398029609' ...",
+  espera: { erro: '23505', restricao: 'uq_paciente_cpf' },
+}</pre>
+    </div>
+    <div>
+      <table>
+        <tr><th>Grupo</th><th>Testes</th></tr>
+        <tr><td>Tipos de dados</td><td class="num">T01 a T06 (6)</td></tr>
+        <tr><td>Restrições</td><td class="num">T07 a T19 (13)</td></tr>
+        <tr><td>Regras com gatilhos</td><td class="num">T20 a T30 (11)</td></tr>
+        <tr><td>Consultas, sigilo e busca</td><td class="num">T31 a T38 (8)</td></tr>
+        <tr><td>Índices</td><td class="num">I1 a I5</td></tr>
+      </table>
+      <div class="caixa onde"><h3>Onde está</h3><ul>
+        <li>Os casos: <code>nucleo/casos-de-teste.js</code> (o SQL de cada um está lá)</li>
+        <li>Rodar tudo: <code>npm run testes</code></li>
+        <li>O resultado: <code>testes/resultados/RESULTADOS.md</code></li>
+      </ul></div>
+    </div>
+  </div>
+  <img class="tela" src="../evidencias/12-laboratorio-escuro.png" alt="Laboratório de testes" style="margin-top:16px">
+  <div class="botoes"><a class="botao" href="../../app/?quem=camila&amp;aba=laboratorio" target="_blank" rel="noopener">Rodar os 38 testes agora</a>
+    <a class="botao sec" href="https://github.com/AltemirFilho/ciclo-prontuario-unico/blob/main/testes/resultados/RESULTADOS.md" target="_blank" rel="noopener">Ver a tabela de resultados</a></div>
+</section>
+
+<!-- 9 -->
+<section class="parada" id="sistema">
+  <p class="rot">Parada 9</p>
+  <h2>O sistema: <em>quatro abas</em></h2>
+  <img class="tela" src="../evidencias/01-prontuario-escuro.png" alt="Sistema" style="margin-top:12px">
+  <div class="duas">
+    <div class="caixa"><h3>As abas</h3><ul>
+      <li><b>Atendimento</b>: agenda do dia, busca, o prontuário (alergia no topo, linha do tempo de todas as áreas) e o formulário de registro.</li>
+      <li><b>Laboratório de testes</b>: os 38 testes e os índices rodando ao vivo.</li>
+      <li><b>Console SQL</b>: consultas prontas (restrições, índices, gatilhos, planos) para responder pergunta na hora.</li>
+      <li><b>Como funciona</b>: antes e depois, o modelo do banco e o porquê de cada decisão.</li>
+    </ul></div>
+    <div class="caixa mostra"><h3>No alto da tela</h3><ul>
+      <li><b>Você é</b>: troca o profissional (Camila da fisio, Helena da medicina, Renata da psicologia...). A linha do tempo muda o que cada um pode ler.</li>
+      <li><b>Sala</b>: onde o atendimento acontece.</li>
+      <li><b>Modo projetor</b>: tema claro para sala iluminada.</li>
+      <li>Ao abrir, o banco é montado do zero em uns 8 segundos (2.506 pacientes, 90 mil registros).</li>
+    </ul></div>
+  </div>
+  <div class="caixa mostra"><h3>A demonstração, clique a clique</h3><ul>
+    <li>1. Na agenda, a Dona Maria está <b>em atendimento</b>: clique nela.</li>
+    <li>2. Mostre o <b>alerta de dipirona</b> e o primeiro registro: a médica pediu, hoje cedo, para tirar a carga.</li>
+    <li>3. No formulário, escreva algo e ponha <b>Dor = 15</b> → "O banco recusou", com <code>23514 · ck_registro_dor</code>.</li>
+    <li>4. Troque para <b>3</b> e salve: o registro aparece no topo e a auditoria mostra "escreveu".</li>
+    <li>5. Clique em <b>Tentar apagar</b>: o gatilho recusa o DELETE.</li>
+  </ul></div>
+  <div class="botoes"><a class="botao" href="../../app/?quem=camila&amp;paciente=18398029609" target="_blank" rel="noopener">Abrir o sistema como a Camila</a>
+    <a class="botao sec" href="../../app/?quem=bruno&amp;paciente=14041343526" target="_blank" rel="noopener">Ver o sigilo (José, como o fisio Bruno)</a></div>
+</section>
+
+<!-- 10 -->
+<section class="parada" id="artigo">
+  <p class="rot">Parada 10</p>
+  <h2>O artigo: <em>modelo SBC da UNIT</em>, 14 páginas</h2>
+  <div class="duas">
+    <div class="caixa"><h3>As seções</h3><ul>
+      <li><b>Resumo e Abstract</b> com os números principais.</li>
+      <li><b>1. Introdução</b>: a Dona Maria, a lei (CFM 1.638/2002, Lei 13.787/2018, LGPD) e os objetivos.</li>
+      <li><b>2. Trabalhos relacionados</b>: e-SUS APS, RNDS, OpenMRS, e a nossa diferença (regras no banco, provadas por teste).</li>
+      <li><b>3. Metodologia</b>: PGlite, dados sintéticos, como cada teste funciona, o GitHub.</li>
+      <li><b>4. Desenvolvimento e resultados</b>: modelo, tipos, restrições, gatilhos, consultas, índices, escala, e a tabela com os 38 testes.</li>
+      <li><b>5. Conclusão</b>: limitações e trabalhos futuros.</li>
+      <li><b>Declaração de uso de IA</b> e <b>Referências</b>.</li>
+    </ul></div>
+    <div>
+      <div class="caixa porque"><h3>O detalhe que dá confiança</h3><ul>
+        <li>O artigo é <b>gerado a partir dos resultados dos testes</b> (<code>scripts/artigo/gerar_artigo.py</code>). Nenhum número foi digitado à mão: o texto não tem como divergir do que foi medido.</li>
+      </ul></div>
+      <div class="caixa onde"><h3>O que vocês precisam fazer</h3><ul>
+        <li>Trocar o <b>e-mail marcado em amarelo</b> no cabeçalho.</li>
+        <li>Ler a <b>Declaração de uso de IA</b> e ajustar se precisar.</li>
+        <li>Arquivo: <code>Downloads\Trabalho_BD_Prontuario_Unico\Artigo_Prontuario_Unico_BD.docx</code></li>
+      </ul></div>
+      <div class="botoes"><a class="botao sec" href="../artigo/Artigo_Prontuario_Unico_BD.pdf" target="_blank" rel="noopener">Abrir o PDF do artigo</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="parada" id="slides">
+  <p class="rot">Parada 11</p>
+  <h2>A apresentação: <em>16 slides</em>, no motor de sempre</h2>
+  <div class="duas">
+    <div class="caixa"><h3>Teclas</h3><ul>
+      <li><kbd>→</kbd> <kbd>espaço</kbd> ou o passador: avança (alguns slides revelam por partes).</li>
+      <li><kbd>←</kbd>: volta · <kbd>F</kbd>: tela cheia · <kbd>M</kbd>: menu de slides</li>
+      <li><kbd>L</kbd>: laser · <kbd>B</kbd>: tela preta</li>
+    </ul></div>
+    <div class="caixa"><h3>Três jeitos de abrir</h3><ul>
+      <li><b>Plano A:</b> dois cliques em <code>INICIAR.bat</code> (pasta do projeto). Abre os slides, e o botão do slide 13 abre o sistema.</li>
+      <li><b>Plano B:</b> no ar, em qualquer computador com internet.</li>
+      <li><b>Plano C:</b> <code>Apresentacao_Prontuario_Unico.html</code> em Downloads: abre sem internet e sem servidor. Ainda tem o PDF de reserva.</li>
+    </ul></div>
+  </div>
+  <div class="tabela-rolagem"><table>
+    <tr><th>Slides</th><th>Assunto</th><th>Quem fala (sugestão)</th></tr>
+    <tr><td class="num">1 a 5</td><td>Capa, Dona Maria, as 4 causas, a solução, o banco por dentro</td><td>Altemir</td></tr>
+    <tr><td class="num">6 a 9</td><td>Tipos, restrições, gatilhos, LGPD e sigilo</td><td>Juscelino</td></tr>
+    <tr><td class="num">10 a 12</td><td>Índices, escala, 38 de 38</td><td>Juscelino</td></tr>
+    <tr><td class="num">13</td><td>Demonstração ao vivo</td><td>Altemir</td></tr>
+    <tr><td class="num">14 a 16</td><td>GitHub, conclusão, obrigado</td><td>Altemir</td></tr>
+  </table></div>
+  <div class="botoes"><a class="botao" href="../apresentacao/" target="_blank" rel="noopener">Abrir a apresentação</a></div>
+</section>
+
+<!-- 12 -->
+<section class="parada" id="github">
+  <p class="rot">Parada 12</p>
+  <h2>O GitHub: <em>pronto</em> é teste passando</h2>
+  <div class="duas">
+    <div><img class="tela" src="../evidencias/github-issues.png" alt="Issues no GitHub"></div>
+    <div>
+      <div class="caixa"><h3>Como está organizado</h3><ul>
+        <li><b>16 histórias de usuário</b> (issues), no formato "Como... quero... para...", com a situação real e os critérios de aceite.</li>
+        <li><b>4 entregas</b> (milestones) e etiquetas por tipo de trabalho.</li>
+        <li>Fluxo Kanban simples: <b>aberta</b> = em andamento, <b>fechada</b> = pronta.</li>
+        <li><b>Definição de pronto:</b> um script lê o resultado dos testes, fecha a história e publica a tabela esperado × obtido na issue.</li>
+        <li>Commits em português, contando o porquê de cada mudança.</li>
+      </ul></div>
+      <div class="caixa onde"><h3>Falta (com vocês)</h3><ul>
+        <li>O Juscelino aceitar o convite do repositório.</li>
+        <li>Fechar a <b>#15</b> ao enviar o artigo e a <b>#16</b> depois de apresentar.</li>
+      </ul></div>
+      <div class="botoes"><a class="botao sec" href="https://github.com/AltemirFilho/ciclo-prontuario-unico/issues?q=is%3Aissue" target="_blank" rel="noopener">Abrir as issues</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="parada" id="dia">
+  <p class="rot">Parada 13</p>
+  <h2>No dia: <em>checklist</em></h2>
+  <ul class="check">
+    <li><b>Antes de sair:</b> e-mail no artigo, ler a declaração de IA, ensaiar uma vez com o roteiro (Downloads).</li>
+    <li><b>Na sala, 10 minutos antes:</b> dois cliques em <code>INICIAR.bat</code>, e deixar a janela preta aberta.</li>
+    <li><b>Abrir o sistema numa segunda aba</b> (botão do slide 13) e esperar o banco montar.</li>
+    <li><b>Sala clara?</b> Modo projetor no sistema.</li>
+    <li><b>Sem notebook?</b> Use o plano B, que está no ar. Sem internet? O arquivo único de Downloads.</li>
+    <li><b>Até 18h35:</b> enviar o artigo e fechar a #15. Depois de apresentar, fechar a #16.</li>
+  </ul>
+</section>
+
+<footer>Tour do projeto Ciclo Prontuário Único · Banco de Dados · UNIT · 2026 · dados 100% fictícios</footer>
+</main>
+</body>
+</html>
