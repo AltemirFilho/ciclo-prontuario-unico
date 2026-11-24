@@ -330,7 +330,7 @@ async function carregarAuditoria(id) {
 // ---------------------------------------------------------------------
 // Cada especialidade tem os seus campos. Tudo vai para a mesma coluna
 // medidas (JSONB) do registro: área nova ou campo novo não muda a tabela.
-// A dor (0 a 10) e o peso têm CHECK no banco, com teste (T16 e T04).
+// A dor (0 a 10) tem CHECK no banco, com teste (T16); o peso tem CHECK, sem teste próprio.
 const campoNum = (id, rotulo, extra = '') =>
   `<div class="campo"><label for="${id}">${rotulo}</label><input id="${id}" type="number" ${extra}></div>`
 const campoTxt = (id, rotulo, exemplo) =>
