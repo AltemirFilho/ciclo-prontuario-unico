@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ciclo · Prontuário Único</title>
+  <meta name="description" content="Prontuário único para clínica multidisciplinar. Trabalho de Banco de Dados (UNIT).">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M48 12A38 38 0 0 0 48 88' fill='none' stroke='%233A8CE8' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M52 12A38 38 0 0 1 52 88' fill='none' stroke='%235BCAE0' stroke-width='9' stroke-linecap='round'/%3E%3Ccircle cx='50' cy='50' r='7' fill='%230F2238'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/ciclo.css">
+</head>
+<body>
+
+  <!-- Tela de carregamento: o PostgreSQL sobe dentro do navegador -->
+  <div id="carregando" role="status" aria-live="polite">
+    <div class="carregando-caixa">
+      <svg class="ciclo-logo" viewBox="0 0 100 100" aria-hidden="true">
+        <path class="arco arco-esq" d="M 48 12.05 A 38 38 0 0 0 48 87.95" />
+        <path class="arco arco-dir" d="M 52 12.05 A 38 38 0 0 1 52 87.95" />
+        <circle class="centro" cx="50" cy="50" r="6" />
+        <g class="grupo-orbita"><circle class="orbita" cx="50" cy="12" r="5" /></g>
+      </svg>
+      <h1>Ciclo · Prontuário Único</h1>
+      <p>Montando o banco da clínica. O PostgreSQL roda aqui mesmo, dentro do navegador.</p>
+      <ul class="etapas" id="etapas"></ul>
+      <div class="carregando-rodape" id="carregando-rodape">PostgreSQL via PGlite (WebAssembly) · dados fictícios</div>
+    </div>
+  </div>
+
+  <header class="topo">
+    <div class="marca">
+      <svg class="ciclo-logo" viewBox="0 0 100 100" aria-hidden="true">
+        <path class="arco arco-esq" d="M 48 12.05 A 38 38 0 0 0 48 87.95" />
+        <path class="arco arco-dir" d="M 52 12.05 A 38 38 0 0 1 52 87.95" />
+        <circle class="centro" cx="50" cy="50" r="6" />
+        <g class="grupo-orbita"><circle class="orbita" cx="50" cy="12" r="5" /></g>
+      </svg>
+      <strong>Ciclo</strong>
+      <span>Prontuário Único</span>
+    </div>
+
+    <nav class="abas" role="tablist" aria-label="Seções">
+      <button role="tab" data-aba="atendimento" aria-selected="true">Atendimento</button>
+      <button role="tab" data-aba="laboratorio" aria-selected="false">Laboratório de testes</button>
+      <button role="tab" data-aba="console" aria-selected="false">Console SQL</button>
+      <button role="tab" data-aba="como" aria-selected="false">Como funciona</button>
+    </nav>
+
+    <div class="topo-direita">
+      <div class="quem" title="Quem está usando o sistema agora">
+        <span class="bolinha" id="quem-cor"></span>
+        <label for="quem">Você é</label>
+        <select id="quem"></select>
+      </div>
+      <div class="sala">
+        <label for="sala">Sala</label>
+        <select id="sala"></select>
+      </div>
+      <button class="botao-tema" id="botao-tema" title="Alterna o tema claro, melhor para projetor">Modo projetor</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= ATENDIMENTO ================= -->
+    <section id="aba-atendimento" role="tabpanel">
+      <div class="grade-atendimento">
+        <div class="coluna coluna-fixa">
+          <div class="cartao">
+            <div class="cartao-titulo">Buscar paciente
+              <button class="link-botao" id="novo-paciente">+ novo paciente</button>
+            </div>
+            <div class="cartao-corpo busca">
+              <input id="busca" type="search" autocomplete="off" placeholder="Nome (sem acento vale) ou CPF">
+              <ul class="lista" id="resultados-busca"></ul>
+            </div>
+          </div>
+          <div class="cartao">
+            <div class="cartao-titulo">Sua agenda de hoje</div>
+            <div class="cartao-corpo">
+              <ul class="lista" id="agenda"></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="coluna" id="prontuario">
+          <div class="cartao vazio">Escolha um paciente na agenda ou na busca.</div>
+        </div>
+
+        <div class="coluna coluna-fixa" id="lateral">
+          <div class="cartao">
+            <div class="cartao-corpo" style="padding-top:16px" id="forma-registro">
+              <p class="forma-titulo">Registrar no prontuário</p>
+              <p class="forma-sub">Escolha um paciente para escrever.</p>
+            </div>
+          </div>
+          <div class="cartao">
+            <div class="cartao-titulo">Quem abriu este prontuário</div>
+            <div class="cartao-corpo">
+              <ul class="lista auditoria" id="auditoria"><li class="apagado">Nenhum paciente aberto.</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LABORATÓRIO ================= -->
+    <section id="aba-laboratorio" role="tabpanel" class="escondido"></section>
+
+    <!-- ================= CONSOLE ================= -->
+    <section id="aba-console" role="tabpanel" class="escondido"></section>
+
+    <!-- ================= COMO FUNCIONA ================= -->
+    <section id="aba-como" role="tabpanel" class="escondido"></section>
+  </main>
+
+  <dialog id="modal-paciente">
+    <form class="modal-corpo" id="form-paciente" method="dialog">
+      <h3>Novo paciente</h3>
+      <div id="aviso-paciente"></div>
+      <div class="campo"><label for="np-nome">Nome completo</label><input id="np-nome" required></div>
+      <div class="campo-linha">
+        <div class="campo"><label for="np-cpf">CPF</label><input id="np-cpf" inputmode="numeric" placeholder="000.000.000-00" required></div>
+        <div class="campo"><label for="np-nasc">Nascimento</label><input id="np-nasc" type="date" required></div>
+      </div>
+      <div class="campo"><label for="np-tel">Telefone (opcional)</label><input id="np-tel" inputmode="numeric" placeholder="79 99999-9999"></div>
+      <div class="modal-acoes">
+        <button type="button" class="botao secundario" id="np-cancelar">Cancelar</button>
+        <button type="submit" class="botao" id="np-salvar">Cadastrar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" aria-live="polite"></div>
+
+  <script type="module" src="js/principal.js"></script>
+</body>
+</html>
