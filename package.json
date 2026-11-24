@@ -1,0 +1,21 @@
+{
+  "name": "ciclo-prontuario-unico",
+  "version": "1.0.0",
+  "description": "Prontuário único para clínica multidisciplinar: trabalho de Banco de Dados (UNIT)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "testes": "node testes/rodar-testes.mjs",
+    "banco": "node scripts/montar-e-contar.mjs",
+    "servidor": "node scripts/servidor.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@electric-sql/pglite": "^0.6.0"
+  }
+}
