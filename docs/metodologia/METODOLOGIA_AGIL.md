@@ -1,6 +1,6 @@
 # Metodologia ágil
 
-O trabalho foi conduzido em Kanban, no próprio GitHub, com uma regra simples herdada do pedido do professor: **opinião sem teste não conta**. Por isso a nossa definição de pronto é um teste passando.
+O trabalho foi conduzido num fluxo Kanban simples, no próprio GitHub, usando issues e entregas, com uma regra simples herdada do pedido do professor: **opinião sem teste não conta**. Por isso a nossa definição de pronto é um teste passando.
 
 ## Como o trabalho foi organizado
 
@@ -9,7 +9,6 @@ O trabalho foi conduzido em Kanban, no próprio GitHub, com uma regra simples he
 | **Issues** | 16 histórias de usuário. Cada uma tem a situação real que motivou, os critérios de aceite e os testes ligados |
 | **Milestones** | 4 entregas: (1) modelagem e regras, (2) consultas, índices e LGPD, (3) sistema e evidências, (4) artigo e apresentação |
 | **Labels** | o tipo de trabalho: restrição, tipo de dado, gatilho, índice, consulta, LGPD, sistema, documentação, apresentação |
-| **Projects (Kanban)** | colunas Backlog, A fazer, Fazendo, Revisão e Pronto |
 | **Commits** | mensagens em português contando o porquê da mudança, com referência à história (`Refs #7`) |
 
 ## Histórias de usuário
@@ -35,11 +34,12 @@ As histórias que não são do banco (sistema, artigo, apresentação) fecham qu
 
 ## Ciclo de cada história
 
-1. **Backlog:** a história nasce de uma situação real.
-2. **A fazer:** entra na entrega da vez.
-3. **Fazendo:** SQL e teste escritos juntos (o teste diz o que o banco tem que recusar ou aceitar).
-4. **Revisão:** `npm run testes` roda a bateria inteira; nada é aceito com teste vermelho.
-5. **Pronto:** o script publica a evidência e fecha.
+No GitHub, o estado da história é o estado da issue: **aberta** está na fila ou em andamento, **fechada** está pronta. A entrega (milestone) mostra o progresso de cada etapa.
+
+1. **Fila:** a história nasce de uma situação real e entra numa entrega.
+2. **Em andamento:** SQL e teste escritos juntos (o teste diz o que o banco tem que recusar ou aceitar).
+3. **Revisão:** `npm run testes` roda a bateria inteira; nada é aceito com teste vermelho.
+4. **Pronto:** o script publica a evidência na issue e fecha.
 
 ## Reproduzir
 
@@ -47,5 +47,4 @@ As histórias que não são do banco (sistema, artigo, apresentação) fecham qu
 node scripts/github/criar-backlog.mjs          # cria etiquetas, entregas e histórias (pula o que já existe)
 npm run testes                                 # gera as evidências
 node scripts/github/fechar-com-evidencia.mjs   # fecha o que estiver comprovado
-node scripts/github/criar-quadro.mjs           # monta o quadro Kanban (precisa do escopo "project" no gh)
 ```

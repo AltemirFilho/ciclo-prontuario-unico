@@ -373,8 +373,9 @@ B.append(corpo(
     'próprio PostgreSQL no `EXPLAIN ANALYZE`; cada valor é a mediana de 15 execuções. Um teste de escala repetiu a medição da '
     'linha do tempo em três tamanhos de clínica.'))
 B.append(corpo(
-    'O acompanhamento foi feito no GitHub, com quadro Kanban, 16 histórias de usuário cadastradas como //issues// e quatro entregas '
-    '(//milestones//), em uma adaptação simples de práticas ágeis [12, 13]. A definição de pronto foi objetiva: uma história só '
+    'O acompanhamento foi feito no GitHub, com 16 histórias de usuário cadastradas como //issues//, quatro entregas '
+    '(//milestones//) e etiquetas por tipo de trabalho, num fluxo Kanban simples: história aberta está na fila ou em andamento, '
+    'história fechada está pronta. É uma adaptação enxuta de práticas ágeis [12, 13]. A definição de pronto foi objetiva: uma história só '
     'fecha quando os testes ligados a ela passam. Um script lê os resultados, fecha a história e publica na //issue// a tabela de '
     f'evidência. Código, testes e evidências estão em {REPO}, e o sistema pode ser aberto em {SITE}.'))
 
