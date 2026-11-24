@@ -1,0 +1,146 @@
+{
+  "tabelas": [
+    {
+      "tabela": "registro_clinico",
+      "dados_bytes": 30294016,
+      "indices_bytes": 9781248
+    },
+    {
+      "tabela": "acesso_prontuario",
+      "dados_bytes": 21716992,
+      "indices_bytes": 23117824
+    },
+    {
+      "tabela": "atendimento",
+      "dados_bytes": 6995968,
+      "indices_bytes": 9240576
+    },
+    {
+      "tabela": "paciente",
+      "dados_bytes": 475136,
+      "indices_bytes": 2711552
+    },
+    {
+      "tabela": "condicao",
+      "dados_bytes": 139264,
+      "indices_bytes": 57344
+    },
+    {
+      "tabela": "alergia",
+      "dados_bytes": 49152,
+      "indices_bytes": 73728
+    },
+    {
+      "tabela": "especialidade",
+      "dados_bytes": 8192,
+      "indices_bytes": 32768
+    },
+    {
+      "tabela": "profissional",
+      "dados_bytes": 8192,
+      "indices_bytes": 32768
+    }
+  ],
+  "indices": [
+    {
+      "indice": "ix_acesso_paciente_momento",
+      "tabela": "acesso_prontuario",
+      "bytes": 14999552
+    },
+    {
+      "indice": "pk_acesso_prontuario",
+      "tabela": "acesso_prontuario",
+      "bytes": 8118272
+    },
+    {
+      "indice": "ix_registro_paciente_data",
+      "tabela": "registro_clinico",
+      "bytes": 5693440
+    },
+    {
+      "indice": "pk_registro_clinico",
+      "tabela": "registro_clinico",
+      "bytes": 4071424
+    },
+    {
+      "indice": "ix_atendimento_profissional_inicio",
+      "tabela": "atendimento",
+      "bytes": 3088384
+    },
+    {
+      "indice": "ix_atendimento_paciente",
+      "tabela": "atendimento",
+      "bytes": 2531328
+    },
+    {
+      "indice": "ix_paciente_nome_busca",
+      "tabela": "paciente",
+      "bytes": 2269184
+    },
+    {
+      "indice": "pk_atendimento",
+      "tabela": "atendimento",
+      "bytes": 1810432
+    },
+    {
+      "indice": "uq_atendimento_id_paciente",
+      "tabela": "atendimento",
+      "bytes": 1810432
+    },
+    {
+      "indice": "uq_paciente_cpf",
+      "tabela": "paciente",
+      "bytes": 180224
+    },
+    {
+      "indice": "pk_paciente",
+      "tabela": "paciente",
+      "bytes": 131072
+    },
+    {
+      "indice": "uq_paciente_cns",
+      "tabela": "paciente",
+      "bytes": 131072
+    },
+    {
+      "indice": "pk_condicao",
+      "tabela": "condicao",
+      "bytes": 57344
+    },
+    {
+      "indice": "uq_alergia_ativa",
+      "tabela": "alergia",
+      "bytes": 40960
+    },
+    {
+      "indice": "pk_alergia",
+      "tabela": "alergia",
+      "bytes": 32768
+    },
+    {
+      "indice": "uq_registro_retifica",
+      "tabela": "registro_clinico",
+      "bytes": 16384
+    },
+    {
+      "indice": "uq_especialidade_nome",
+      "tabela": "especialidade",
+      "bytes": 16384
+    },
+    {
+      "indice": "pk_profissional",
+      "tabela": "profissional",
+      "bytes": 16384
+    },
+    {
+      "indice": "uq_profissional_registro",
+      "tabela": "profissional",
+      "bytes": 16384
+    },
+    {
+      "indice": "pk_especialidade",
+      "tabela": "especialidade",
+      "bytes": 16384
+    }
+  ]
+}
