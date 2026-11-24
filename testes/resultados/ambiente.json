@@ -1,0 +1,40 @@
+{
+  "quando": "24/11/2026, 09:37:45",
+  "postgres": "PostgreSQL 19.0 (PGlite 0.6.0)",
+  "pglite": "0.6.0",
+  "node": "v24.15.0",
+  "sistema": "Windows_NT 10.0.26200",
+  "processador": "Intel(R) Core(TM) Ultra 9 185H",
+  "memoriaGB": 32,
+  "tempoMontagemMs": 10172,
+  "tabelas": [
+    {
+      "tabela": "paciente",
+      "linhas": 5006
+    },
+    {
+      "tabela": "profissional",
+      "linhas": 8
+    },
+    {
+      "tabela": "atendimento",
+      "linhas": 80077
+    },
+    {
+      "tabela": "registro_clinico",
+      "linhas": 180239
+    },
+    {
+      "tabela": "alergia",
+      "linhas": 592
+    },
+    {
+      "tabela": "condicao",
+      "linhas": 1749
+    },
+    {
+      "tabela": "acesso_prontuario",
+      "linhas": 360478
+    }
+  ]
+}

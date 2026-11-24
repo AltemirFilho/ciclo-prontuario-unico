@@ -1,0 +1,26 @@
+[
+  {
+    "pacientes": 1250,
+    "atendimentos": 10000,
+    "registros": 22457,
+    "sem": 1.18,
+    "com": 0.043,
+    "vezes": 27.441860465116278
+  },
+  {
+    "pacientes": 5000,
+    "atendimentos": 40000,
+    "registros": 90171,
+    "sem": 4.711,
+    "com": 0.047,
+    "vezes": 100.2340425531915
+  },
+  {
+    "pacientes": 20000,
+    "atendimentos": 160000,
+    "registros": 360051,
+    "sem": 28.333,
+    "com": 0.049,
+    "vezes": 578.2244897959183
+  }
+]
