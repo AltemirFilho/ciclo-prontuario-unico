@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ciclo · Prontuário Único</title>
+  <meta name="description" content="Trabalho de Banco de Dados (UNIT): prontuário único para clínica multidisciplinar.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#0F2238; --surface:#1A3149; --line:#24405F; --ink:#F4F8FE; --soft:#A8B8CC; --muted:#7F90A6; --primary:#3A8CE8; --accent:#5BCAE0; --warm:#E89A78; }
+    * { box-sizing: border-box; }
+    body { margin:0; min-height:100vh; background: radial-gradient(1000px 500px at 80% -10%, rgba(58,140,232,.18), transparent 60%), var(--bg); color:var(--ink); font:16px/1.55 'Geist','Segoe UI',system-ui,sans-serif; }
+    main { max-width: 880px; margin: 0 auto; padding: 64px 20px; }
+    .logo { width:56px; height:56px; }
+    .logo .a { fill:none; stroke-width:7; stroke-linecap:round; }
+    h1 { font-size: clamp(30px, 5vw, 46px); letter-spacing:-.03em; line-height:1.1; margin: 18px 0 12px; }
+    p.lead { color: var(--soft); font-size: 18px; max-width: 640px; }
+    .grade { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 34px 0; }
+    a.cartao { display:block; padding:18px 20px; border-radius:14px; background:var(--surface); border:1px solid var(--line); color:var(--ink); text-decoration:none; transition: border-color .2s, transform .2s; }
+    a.cartao:hover { border-color: var(--primary); transform: translateY(-2px); }
+    a.cartao b { display:block; font-size:17px; margin-bottom:4px; }
+    a.cartao span { color: var(--muted); font-size: 14px; }
+    footer { color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); padding-top: 18px; }
+  </style>
+</head>
+<body>
+  <main>
+    <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+      <path class="a" d="M 48 12.05 A 38 38 0 0 0 48 87.95" stroke="#3A8CE8" />
+      <path class="a" d="M 52 12.05 A 38 38 0 0 1 52 87.95" stroke="#5BCAE0" />
+      <circle cx="50" cy="50" r="6" fill="#F4F8FE" /><circle cx="50" cy="12" r="5" fill="#E89A78" />
+    </svg>
+    <h1>Ciclo Prontuário Único</h1>
+    <p class="lead">O fim do prontuário espalhado: numa clínica com várias especialidades, cada paciente tem uma ficha só, escrita e lida por todos, com as regras garantidas pelo próprio banco de dados.</p>
+
+    <div class="grade">
+      <a class="cartao" href="app/?quem=camila"><b>Abrir o sistema</b><span>PostgreSQL rodando no navegador, com a clínica de demonstração</span></a>
+      <a class="cartao" href="docs/apresentacao/"><b>Apresentação</b><span>Os 10 minutos em sala</span></a>
+      <a class="cartao" href="https://github.com/AltemirFilho/ciclo-prontuario-unico/blob/main/testes/resultados/RESULTADOS.md"><b>Resultados dos testes</b><span>38 testes e 4 índices medidos</span></a>
+      <a class="cartao" href="https://github.com/AltemirFilho/ciclo-prontuario-unico"><b>Código e quadro ágil</b><span>Repositório, issues e entregas</span></a>
+    </div>
+
+    <footer>Trabalho de Banco de Dados · Ciência da Computação · UNIT, Aracaju/SE · Prof. Sérgio Roberto Santos Santana<br>
+      Altemir Cruz da Silva Filho e Juscelino Santos de Andrade · 2026 · dados 100% fictícios</footer>
+  </main>
+</body>
+</html>
