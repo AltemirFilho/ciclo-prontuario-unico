@@ -364,3 +364,17 @@ html.pdf #palco{position:relative;left:0;top:0;transform:none;width:1280px;heigh
 .s-fim .logo-ciclo{z-index:1}
 .marca-gigante{position:absolute;left:50%;bottom:-10rem;transform:translateX(-50%);font:800 46rem/.8 'Geist';letter-spacing:-.07em;white-space:nowrap;
   color:transparent;background:linear-gradient(180deg,rgba(91,202,224,.26),rgba(91,202,224,0) 78%);-webkit-background-clip:text;background-clip:text;pointer-events:none}
+
+/* Ajustes visuais de 24/11, tarde: títulos sem palavra sozinha na última linha,
+   demonstração ocupando o slide e captura do sigilo encostada nas regras.
+   Para desfazer, basta apagar este bloco. */
+h1,h2{text-wrap:balance}
+.msg>span,.txt,.nota,.regra span{text-wrap:pretty}
+.s-demo .grade{margin-top:6rem;gap:7rem}
+.s-demo .roteiro ol{gap:3.8rem}
+.s-demo .roteiro li{font-size:3.5rem;grid-template-columns:7.2rem 1fr;gap:2.6rem}
+.s-demo .roteiro li::before{width:7.2rem;height:7.2rem;font-size:3.3rem}
+.s-demo .botoes{gap:2.8rem}
+.s-demo .botao{padding:4rem 4.2rem;font-size:3.8rem}
+.s-demo .botao small{font-size:2.3rem;word-break:normal}
+.s-lgpd .grade{grid-template-columns:.62fr 1fr}
