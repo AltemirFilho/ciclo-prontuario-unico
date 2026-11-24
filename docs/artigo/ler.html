@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artigo · Prontuário Único</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #1E2A38; color: #F4F8FE; font: 15px/1.5 'Segoe UI', system-ui, sans-serif; }
+  header { position: sticky; top: 0; z-index: 2; background: rgba(15, 34, 56, .95); border-bottom: 1px solid #2D4669;
+           padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+  header b { font-size: 16px; }
+  header a { color: #5BCAE0; text-decoration: none; font-size: 14px; }
+  header span { color: #A8B8CC; font-size: 14px; }
+  main { max-width: 900px; margin: 0 auto; padding: 18px 16px 60px; display: grid; gap: 18px; }
+  img { width: 100%; height: auto; display: block; border-radius: 4px; box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .7); background: #fff; }
+  .num { color: #7F90A6; font-size: 13px; text-align: center; margin-top: -10px; }
+</style>
+</head>
+<body>
+<header>
+  <b>Artigo · Prontuário Único (modelo SBC da UNIT)</b>
+  <span>14 páginas · o arquivo para entregar é o .docx</span>
+  <a href="Artigo_Prontuario_Unico_BD.docx">baixar .docx</a>
+  <a href="Artigo_Prontuario_Unico_BD.pdf">baixar .pdf</a>
+</header>
+<main id="paginas"></main>
+<script>
+  const main = document.getElementById('paginas')
+  for (let i = 1; i <= 14; i++) {
+    const n = String(i).padStart(2, '0')
+    main.insertAdjacentHTML('beforeend',
+      `<img src="paginas/pagina-${n}.jpg" alt="Página ${i} do artigo" loading="${i < 3 ? 'eager' : 'lazy'}"><div class="num">página ${i} de 14</div>`)
+  }
+</script>
+</body>
+</html>
