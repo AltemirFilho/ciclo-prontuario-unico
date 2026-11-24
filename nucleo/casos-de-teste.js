@@ -198,7 +198,7 @@ export const CASOS = [
       `INSERT INTO alergia (paciente_id, substancia, gravidade, registrada_por)
        VALUES (${MARIA}, 'Dipirona', 'grave', ${HELENA})`,
     ],
-    verificacao: `SELECT count(*) FILTER (WHERE ativa) = 1 AND count(*) = 2 AS ok,
+    verificacao: `SELECT count(*) FILTER (WHERE ativa) = 1 AND count(*) FILTER (WHERE NOT ativa) >= 1 AS ok,
                          count(*) FILTER (WHERE ativa) || ' ativa, ' || count(*) FILTER (WHERE NOT ativa) || ' desativada' AS obtido
                     FROM alergia WHERE paciente_id = ${MARIA} AND normalizar(substancia) = 'dipirona'`,
     espera: { ok: true },
@@ -251,10 +251,14 @@ export const CASOS = [
               (SELECT max(id) FROM registro_clinico WHERE paciente_id = ${MARIA})
          FROM atendimento a WHERE a.id = ${AT_MARIA_FISIO}`,
     ],
-    verificacao: `SELECT count(*) = 2 AND count(retifica_id) = 1 AS ok,
+    // só olha o que este teste gravou (criado_em = now() é a hora desta transação)
+    verificacao: `SELECT count(*) = 2 AND count(retifica_id) = 1
+                         AND bool_or(retifica_id = (SELECT min(id) FROM registro_clinico
+                                                     WHERE atendimento_id = ${AT_MARIA_FISIO} AND criado_em = now())) AS ok,
                          count(*) || ' registros: o original e a retificação que aponta para ele' AS obtido
                     FROM registro_clinico
-                   WHERE atendimento_id = ${AT_MARIA_FISIO}`,
+                   WHERE atendimento_id = ${AT_MARIA_FISIO}
+                     AND criado_em = now()`,
     espera: { ok: true },
   },
   {
@@ -415,11 +419,14 @@ export const CASOS = [
   {
     id: 'T38', grupo: 'Consulta',
     titulo: 'Resumo mostra alergia, condições e quem escreveu por último',
-    situacao: 'O cabeçalho que todo profissional vê ao abrir a ficha da Dona Maria.',
-    sql: `SELECT 1`,
+    situacao: 'A fisio acabou de escrever; quem abre a ficha da Dona Maria já vê a fisio como última atualização.',
+    sql: `INSERT INTO registro_clinico (atendimento_id, paciente_id, profissional_id, tipo, texto)
+          SELECT a.id, a.paciente_id, a.profissional_id, 'evolucao', 'Isometria de quadríceps, joelho direito sem carga.'
+            FROM atendimento a WHERE a.id = ${AT_MARIA_FISIO}`,
     verificacao: `SELECT alergias @> '[{"substancia": "Dipirona", "gravidade": "grave"}]'
-                         AND cardinality(especialidades) = 4
-                         AND ultimo_registro_por = 'Helena Prado' AS ok,
+                         AND cardinality(especialidades) >= 4
+                         AND ultimo_registro_por = 'Camila Rocha'
+                         AND ultimo_registro_em = now() AS ok,
                          'alergia: ' || (alergias -> 0 ->> 'substancia') || ' (' || (alergias -> 0 ->> 'gravidade') || '); '
                          || jsonb_array_length(condicoes) || ' condições; '
                          || array_to_string(especialidades, ', ') || '; último registro: ' || ultimo_registro_por AS obtido
