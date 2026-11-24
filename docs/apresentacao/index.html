@@ -185,14 +185,15 @@ CHECK (cpf_valido(cpf))  -- dígito verificador</div>
 
 <!-- 9 · LGPD E SIGILO -->
 <section class="slide s-lgpd" data-sec="Decisões" data-titulo="Compartilhar sem expor">
-  <div class="cab ent e1"><b>08</b>LGPD e sigilo</div>
-  <h2 class="ent e2">Compartilhar <em>sem expor</em>: quem leu, e o que cada um pode ler</h2>
+  <div class="cab ent e1"><b>08</b>Consultas, LGPD e sigilo</div>
+  <h2 class="ent e2">Consultas que <em>acham e protegem</em>: quem leu, e o que cada um pode ler</h2>
   <div class="grade">
     <img class="tela ent e3" src="../evidencias/11-sigilo-escuro.png" alt="Fisioterapeuta vê que houve psicologia, mas não o conteúdo" style="max-height:62rem">
     <div class="regras encadeia">
       <div class="regra"><div class="ic">👁️</div><div><b>Toda leitura deixa rastro</b><span>A tela só lê pela função linha_do_tempo(), que registra quem abriu.</span><span class="prova">T29 · T32</span></div></div>
       <div class="regra"><div class="ic">🔒</div><div><b>Sigilo da psicologia</b><span>A equipe vê que houve sessão; o conteúdo só abre para a Psicologia (CFP 001/2009).</span><span class="prova">T33 · T34</span></div></div>
       <div class="regra"><div class="ic">📜</div><div><b>A auditoria não se apaga</b><span>Dado de saúde é dado sensível (LGPD, art. 5º, II).</span><span class="prova">T30</span></div></div>
+      <div class="regra"><div class="ic">🔎</div><div><b>Busca que acha quem já existe</b><span>"joao pedro conseicao" acha João Pedro da Conceição; antes de cadastrar, o banco avisa da ficha parecida.</span><span class="prova">T35 · T36 · T37</span></div></div>
     </div>
   </div>
 </section>
@@ -256,15 +257,14 @@ CHECK (cpf_valido(cpf))  -- dígito verificador</div>
         <i style="--i:20"></i><i style="--i:21"></i><i style="--i:22"></i><i style="--i:23"></i><i style="--i:24"></i><i style="--i:25"></i><i style="--i:26"></i><i style="--i:27"></i><i style="--i:28"></i><i style="--i:29"></i>
         <i style="--i:30"></i><i style="--i:31"></i><i style="--i:32"></i><i style="--i:33"></i><i style="--i:34"></i><i style="--i:35"></i><i style="--i:36"></i><i style="--i:37"></i>
       </div>
+      <div class="grupos-linha"><span class="tag">6 tipos</span><span class="tag">13 restrições</span><span class="tag">11 regras</span><span class="tag">8 consultas</span></div>
+      <p class="txt" style="margin-top:3rem;font-size:2.7rem">Cada recusa veio com o <b>código do PostgreSQL</b> e o <b>nome exato da regra</b>.</p>
     </div>
-    <div class="grupos encadeia">
-      <div class="card grupo"><div class="v">6</div><div class="r">tipos de dados</div></div>
-      <div class="card grupo"><div class="v">13</div><div class="r">restrições de integridade</div></div>
-      <div class="card grupo"><div class="v">11</div><div class="r">regras com gatilhos</div></div>
-      <div class="card grupo"><div class="v">8</div><div class="r">consultas, sigilo e busca</div></div>
+    <div class="ent e4 evidencia">
+      <img class="tela" src="../evidencias/12-laboratorio-escuro.png" alt="Laboratório de testes: esperado e obtido de cada teste">
+      <p class="nota">Captura do laboratório do sistema: cada linha é um teste, com o <b>esperado</b>, o que o <b>PostgreSQL respondeu</b> e o resultado.</p>
     </div>
   </div>
-  <p class="txt ent e5" style="margin-top:4.5rem">Cada recusa veio com o <b>código do PostgreSQL</b> e o <b>nome exato da regra</b>. A mesma bateria roda no terminal e ao vivo dentro do sistema.</p>
 </section>
 
 <!-- 13 · DEMONSTRAÇÃO -->
