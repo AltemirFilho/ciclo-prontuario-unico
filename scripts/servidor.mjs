@@ -1,6 +1,7 @@
 // Servidor estático mínimo para rodar o sistema no notebook (sem dependências).
 // Uso: npm run servidor   → http://localhost:4517/app/
 import { createServer } from 'node:http'
+import { exec } from 'node:child_process'
 import { readFile, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -43,4 +44,12 @@ createServer(async (req, res) => {
   } catch {
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Não encontrado')
   }
-}).listen(PORTA, () => console.log(`Ciclo Prontuário Único em http://localhost:${PORTA}/app/`))
+}).listen(PORTA, () => {
+  console.log(`Ciclo Prontuário Único em http://localhost:${PORTA}/app/`)
+  console.log(`Apresentação em http://localhost:${PORTA}/docs/apresentacao/`)
+  console.log('Deixe esta janela aberta durante a apresentação. Para fechar: Ctrl + C.')
+  // --abrir: abre a apresentação no navegador padrão (atalho INICIAR.bat)
+  if (process.argv.includes('--abrir') && process.platform === 'win32') {
+    exec(`start "" "http://localhost:${PORTA}/docs/apresentacao/"`)
+  }
+})

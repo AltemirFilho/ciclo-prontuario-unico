@@ -1,0 +1,218 @@
+/* Apresentação · Ciclo Prontuário Único · 1rem = 1% da altura do palco 16:9 */
+@font-face{font-family:'Geist';src:url('fontes/geist.woff2') format('woff2');font-weight:100 900;font-display:block}
+@font-face{font-family:'Geist Mono';src:url('fontes/geist-mono.woff2') format('woff2');font-weight:100 900;font-display:block}
+
+:root{
+  --fundo:#0F2238; --fundo-2:#142944; --cartao:#1A3149; --cartao-2:#23435E; --linha:#2D4669;
+  --tinta:#F4F8FE; --suave:#A8B8CC; --apagado:#7F90A6;
+  --azul:#3A8CE8; --ciano:#5BCAE0; --quente:#E89A78; --menta:#5FC388; --perigo:#F07A7A; --ouro:#E8C25A;
+  --medicina:#3A8CE8; --enfermagem:#5BCAE0; --fisio:#5FC388; --nutricao:#E8C25A; --psico:#E89A78;
+}
+html{font-size:min(1vh,.5625vw)}
+html,body{margin:0;height:100%;overflow:hidden}
+body{background:#07131F;font-family:'Geist','Segoe UI',system-ui,sans-serif;color:var(--tinta);-webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums}
+body.sem-cursor,body.sem-cursor *{cursor:none!important}
+#palco{position:absolute;left:50%;top:50%;width:177.7778rem;height:100rem;transform:translate(-50%,-50%);overflow:hidden;
+  background:radial-gradient(120% 90% at 85% 0%,rgba(58,140,232,.16),transparent 55%),radial-gradient(90% 70% at 0% 100%,rgba(91,202,224,.08),transparent 60%),var(--fundo)}
+
+/* ---------- slides e entradas ---------- */
+.slide{position:absolute;inset:0;padding:7rem 8rem 9rem;box-sizing:border-box;opacity:0;visibility:hidden;transition:opacity .6s ease,visibility 0s linear .6s}
+.slide.ativo{opacity:1;visibility:visible;transition:opacity .6s ease}
+.slide .ent{opacity:0;transform:translateY(2.2rem);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.slide.ativo .ent{opacity:1;transform:none}
+.slide.ativo .e1{transition-delay:.06s}.slide.ativo .e2{transition-delay:.16s}.slide.ativo .e3{transition-delay:.28s}
+.slide.ativo .e4{transition-delay:.4s}.slide.ativo .e5{transition-delay:.52s}.slide.ativo .e6{transition-delay:.64s}
+[data-k]{opacity:0;transform:translateY(1.8rem);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+[data-k].vis{opacity:1;transform:none}
+.encadeia>*{opacity:0;transform:translateY(1.6rem);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.slide.ativo .encadeia>*{opacity:1;transform:none}
+.encadeia>*:nth-child(2){transition-delay:.12s}.encadeia>*:nth-child(3){transition-delay:.24s}.encadeia>*:nth-child(4){transition-delay:.36s}
+.encadeia>*:nth-child(5){transition-delay:.48s}.encadeia>*:nth-child(6){transition-delay:.6s}
+
+/* ---------- texto ---------- */
+.cab{display:flex;align-items:center;gap:1.6rem;font:600 2rem/1 'Geist';letter-spacing:.22em;text-transform:uppercase;color:var(--apagado)}
+.cab b{font-weight:800;color:var(--ciano);letter-spacing:.06em}
+.cab b::after{content:"";display:inline-block;width:4.4rem;height:.3rem;margin-left:1.6rem;vertical-align:middle;background:var(--quente)}
+h1,h2{margin:0;letter-spacing:-.03em}
+h2{font-weight:700;font-size:5.6rem;line-height:1.06;margin-top:2rem;max-width:150rem}
+h1 em,h2 em{font-style:normal;color:var(--ciano)}
+p{margin:0}
+.txt{font-size:3.2rem;line-height:1.35;color:var(--suave)}
+.txt b{color:var(--tinta)}
+.nota{font-size:2.3rem;line-height:1.4;color:var(--apagado)}
+.rot{font:700 2.1rem/1.2 'Geist';letter-spacing:.18em;text-transform:uppercase;color:var(--ciano)}
+.mono,code{font-family:'Geist Mono',Consolas,monospace}
+code{font-size:.86em;color:var(--ciano);background:rgba(91,202,224,.1);padding:.2rem .8rem;border-radius:.8rem}
+
+/* ---------- peças ---------- */
+.card{background:var(--cartao);border:.15rem solid var(--linha);border-radius:2.4rem;padding:2.8rem 3rem;box-sizing:border-box;box-shadow:0 2rem 5rem -3rem rgba(0,0,0,.6)}
+.tag{display:inline-flex;align-items:center;gap:1rem;padding:1rem 2rem;border-radius:5rem;background:rgba(91,202,224,.12);color:var(--ciano);font:600 2.3rem/1 'Geist';white-space:nowrap}
+.tag.ok{background:rgba(95,195,136,.14);color:var(--menta)}
+.tag.perigo{background:rgba(240,122,122,.14);color:var(--perigo)}
+.tag.quente{background:rgba(232,154,120,.14);color:var(--quente)}
+.msg{display:flex;align-items:center;gap:2.4rem;padding:2.4rem 3.2rem;border-radius:2.2rem;background:linear-gradient(90deg,rgba(58,140,232,.22),rgba(58,140,232,.08));font:600 3.3rem/1.3 'Geist'}
+.msg::before{content:"";flex:0 0 .6rem;align-self:stretch;border-radius:1rem;background:var(--quente)}
+.msg b{color:var(--ciano)}
+.tela{display:block;border-radius:1.8rem;border:.2rem solid var(--linha);box-shadow:0 3rem 7rem -3rem rgba(0,0,0,.75);max-width:100%}
+.prova{font:600 2.1rem/1.2 'Geist Mono';color:var(--menta)}
+.prova::before{content:"✓ ";font-family:'Geist'}
+
+/* logo da Ciclo */
+.logo-ciclo .arco{fill:none;stroke-width:7;stroke-linecap:round}
+.logo-ciclo .ae{stroke:var(--azul)} .logo-ciclo .ad{stroke:var(--ciano)}
+.logo-ciclo .centro{fill:var(--tinta)} .logo-ciclo .orb{fill:var(--quente)}
+.logo-ciclo .giro{transform-origin:50px 50px;animation:orbita 9s linear infinite}
+@keyframes orbita{to{transform:rotate(360deg)}}
+
+/* ---------- 1 · capa ---------- */
+.s-capa{display:flex;flex-direction:column;justify-content:center;padding-left:11rem}
+.s-capa .logo-ciclo{position:absolute;right:10rem;top:50%;width:52rem;height:52rem;margin-top:-30rem;opacity:.95}
+.s-capa .anel{position:absolute;right:-6rem;top:50%;width:84rem;height:84rem;margin-top:-46rem;border-radius:50%;
+  background:repeating-radial-gradient(circle,transparent 0 5.6rem,rgba(91,202,224,.07) 5.6rem 5.8rem);
+  -webkit-mask-image:radial-gradient(circle,#000 35%,transparent 70%);mask-image:radial-gradient(circle,#000 35%,transparent 70%);animation:orbita 120s linear infinite}
+.s-capa h1{font-size:7.4rem;line-height:1.04;font-weight:800;max-width:104rem;margin:3rem 0 2.6rem}
+.s-capa .sub{font-size:3.2rem;color:var(--suave);max-width:96rem}
+.s-capa .pes{margin-top:7rem;display:grid;gap:1.4rem}
+.s-capa .autores{font:700 3rem/1.3 'Geist'}
+.s-capa .meta{font-size:2.4rem;color:var(--apagado)}
+
+/* ---------- 2 · situação ---------- */
+.s-situacao .grade{display:grid;grid-template-columns:62rem 1fr;gap:6rem;margin-top:4.5rem}
+.dia{display:grid;gap:2.2rem;position:relative;padding-left:4.4rem}
+.dia::before{content:"";position:absolute;left:1.2rem;top:1.5rem;bottom:1.5rem;width:.4rem;border-radius:1rem;background:var(--linha)}
+.dia .passo{position:relative}
+.dia .passo::before{content:"";position:absolute;left:-4.4rem;top:.9rem;width:2.8rem;height:2.8rem;border-radius:50%;background:var(--c);box-shadow:0 0 0 .8rem var(--fundo)}
+.dia .hora{font:700 2.4rem/1 'Geist Mono';color:var(--c)}
+.dia .onde{font:600 2.2rem/1.2 'Geist';color:var(--apagado);margin:.6rem 0}
+.dia p{font-size:2.8rem;line-height:1.3}
+.fichas{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4rem;align-items:start}
+.ficha{background:#F6EFD9;color:#3A3324;border-radius:1rem;padding:2.4rem 2.6rem;font:500 2.4rem/1.5 'Geist';box-shadow:0 2rem 4rem -2rem rgba(0,0,0,.7);transform:rotate(var(--g))}
+.ficha b{display:block;font-size:1.8rem;letter-spacing:.08em;text-transform:uppercase;color:#7A6A44;margin-bottom:1rem}
+.ficha .r{background:rgba(201,60,60,.17);color:#A12F2F;border-radius:.4rem;padding:0 .5rem;font-weight:700}
+.s-situacao .msg{margin-top:4rem}
+
+/* ---------- 3 · causas ---------- */
+.causas{display:grid;gap:2.2rem;margin-top:4.5rem}
+.causa{display:grid;grid-template-columns:1fr 8rem 1fr;align-items:center;gap:2rem}
+.causa .antes,.causa .depois{padding:2.4rem 3rem;border-radius:2rem;font-size:2.9rem;line-height:1.3}
+.causa .antes{background:rgba(232,154,120,.1);border:.15rem solid rgba(232,154,120,.3)}
+.causa .depois{background:rgba(95,195,136,.1);border:.15rem solid rgba(95,195,136,.3)}
+.causa .antes small,.causa .depois small{display:block;font:700 1.8rem/1 'Geist';letter-spacing:.14em;text-transform:uppercase;margin-bottom:1rem}
+.causa .antes small{color:var(--quente)} .causa .depois small{color:var(--menta)}
+.causa .seta{font-size:6rem;text-align:center;color:var(--apagado)}
+
+/* ---------- 4 · solução ---------- */
+.s-solucao .grade{display:grid;grid-template-columns:1fr 44rem;gap:4.5rem;margin-top:3.5rem;align-items:start}
+.destaques{display:grid;gap:2.2rem}
+.destaque{padding:2.4rem 2.6rem;border-left:.6rem solid var(--c);background:var(--cartao);border-radius:0 2rem 2rem 0}
+.destaque b{display:block;font-size:2.8rem;margin-bottom:.6rem}
+.destaque span{font-size:2.3rem;color:var(--suave);line-height:1.35}
+
+/* ---------- 5 · arquitetura ---------- */
+.s-arq .grade{display:grid;grid-template-columns:1fr 40rem;gap:4rem;margin-top:3rem;align-items:start}
+.numeros{display:grid;gap:1.4rem}
+.numero{padding:1.6rem 2.4rem;display:grid;grid-template-columns:9rem 1fr;align-items:center;gap:1.6rem}
+.numero .v{font:800 5.6rem/1 'Geist';letter-spacing:-.03em;color:var(--ciano)}
+.numero .r{font-size:2.2rem;line-height:1.3;color:var(--suave)}
+
+/* ---------- 6 · tipos / 7 · restrições ---------- */
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:2.6rem;margin-top:4rem}
+.cards2{display:grid;grid-template-columns:repeat(2,1fr);gap:2.6rem;margin-top:3.6rem}
+.card h3{margin:0 0 1rem;font:700 3.2rem/1.15 'Geist Mono';color:var(--ciano)}
+.card h4{margin:0 0 1.2rem;font:700 3rem/1.2 'Geist'}
+.card p{font-size:2.5rem;line-height:1.35;color:var(--suave)}
+.card .codigo{font:500 2.1rem/1.45 'Geist Mono';color:var(--tinta);background:rgba(0,0,0,.22);border-radius:1.2rem;padding:1.4rem 1.8rem;margin:1.2rem 0 1.4rem;white-space:pre-wrap}
+.card .prova{margin-top:1.6rem}
+
+/* ---------- 8 · gatilhos / 9 · lgpd ---------- */
+.s-gatilho .grade,.s-lgpd .grade{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:3.5rem;align-items:start}
+.regras{display:grid;gap:2rem}
+.regra{display:grid;grid-template-columns:7rem 1fr;gap:2rem;align-items:start}
+.regra .ic{width:7rem;height:7rem;border-radius:2rem;display:grid;place-items:center;font-size:3.6rem;background:rgba(91,202,224,.12)}
+.regra b{display:block;font-size:2.9rem;margin-bottom:.4rem}
+.regra span{font-size:2.3rem;color:var(--suave);line-height:1.35}
+.regra .prova{display:block;margin-top:.6rem;font-size:1.9rem}
+
+/* ---------- 10 · índices / 11 · escala ---------- */
+.barras{display:grid;gap:3rem;margin-top:4.5rem}
+.exp{display:grid;grid-template-columns:44rem 1fr 15rem;gap:3rem;align-items:center}
+.exp .nome b{display:block;font-size:2.9rem}
+.exp .nome span{font:500 2rem/1.3 'Geist Mono';color:var(--apagado)}
+.par{display:grid;gap:1rem}
+.linha-b{display:grid;grid-template-columns:1fr 17rem;gap:2rem;align-items:center;font:600 2.3rem/1 'Geist Mono'}
+.trilho{height:3rem;border-radius:1.5rem;background:rgba(255,255,255,.06);overflow:hidden}
+.trilho i{display:block;height:100%;width:0;border-radius:1.5rem;background:var(--perigo);transition:width 1.4s cubic-bezier(.2,.7,.2,1) .3s}
+.trilho.com i{background:var(--menta);min-width:.8rem}
+.slide.ativo .trilho i{width:var(--w)}
+.linha-b .ms{text-align:right;color:var(--suave)}
+.linha-b.com .ms{color:var(--menta)}
+.exp .ganho{font:800 5.4rem/1 'Geist';letter-spacing:-.03em;color:var(--menta);text-align:right}
+.exp .ganho small{display:block;font:600 1.9rem/1.2 'Geist';letter-spacing:0;color:var(--apagado);margin-top:.6rem}
+
+/* ---------- 12 · resultados ---------- */
+.s-result .grade{display:grid;grid-template-columns:62rem 1fr;gap:6rem;margin-top:4rem;align-items:center}
+.placar{font:800 26rem/0.9 'Geist';letter-spacing:-.06em;color:var(--menta)}
+.placar small{font-size:.32em;color:var(--suave);letter-spacing:-.02em}
+.grupos{display:grid;grid-template-columns:repeat(2,1fr);gap:2.2rem}
+.grupo{padding:2.4rem 2.6rem}
+.grupo .v{font:800 6rem/1 'Geist';color:var(--ciano)}
+.grupo .r{font-size:2.4rem;color:var(--suave);margin-top:.6rem}
+
+/* ---------- 13 · demo ---------- */
+.s-demo .grade{display:grid;grid-template-columns:1fr 58rem;gap:5rem;margin-top:4rem;align-items:start}
+.roteiro{display:grid;gap:2rem;counter-reset:passo}
+.roteiro li{list-style:none;display:grid;grid-template-columns:6rem 1fr;gap:2rem;align-items:start;font-size:2.9rem;line-height:1.3}
+.roteiro li::before{counter-increment:passo;content:counter(passo);width:6rem;height:6rem;border-radius:50%;display:grid;place-items:center;font:800 2.8rem/1 'Geist';background:var(--azul);color:#fff}
+.roteiro ol{margin:0;padding:0;display:grid;gap:2.2rem}
+.botoes{display:grid;gap:2rem}
+.botao{display:block;text-decoration:none;padding:3rem 3.4rem;border-radius:2.4rem;background:var(--azul);color:#fff;font:700 3.2rem/1.2 'Geist'}
+.botao small{display:block;font:500 2.1rem/1.3 'Geist Mono';opacity:.85;margin-top:.8rem;word-break:break-all}
+.botao.sec{background:var(--cartao);border:.15rem solid var(--linha);color:var(--tinta)}
+
+/* ---------- 14 · ágil ---------- */
+.s-agil .grade{display:grid;grid-template-columns:1fr 60rem;gap:4.5rem;margin-top:3.5rem;align-items:start}
+
+/* ---------- 15 · conclusão / 16 · fim ---------- */
+.s-concl .grade{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:4rem}
+.lista{margin:0;padding:0;list-style:none;display:grid;gap:2rem}
+.lista li{font-size:2.8rem;line-height:1.35;padding-left:4rem;position:relative;color:var(--suave)}
+.lista li b{color:var(--tinta)}
+.lista li::before{content:"";position:absolute;left:0;top:1.3rem;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--c,var(--ciano))}
+.s-fim{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding-left:11rem}
+.s-fim h2{font-size:11rem;font-weight:800}
+.s-fim .links{margin-top:5rem;display:grid;gap:1.6rem;font:500 3rem/1.3 'Geist Mono';color:var(--ciano)}
+.s-fim .links span{display:block;font:600 2rem/1 'Geist';letter-spacing:.16em;text-transform:uppercase;color:var(--apagado);margin-bottom:.8rem}
+.s-fim .logo-ciclo{position:absolute;right:12rem;top:50%;width:40rem;height:40rem;margin-top:-22rem}
+
+/* ---------- rodapé, progresso ---------- */
+#rodape{position:absolute;left:8rem;right:8rem;bottom:3.2rem;display:flex;justify-content:space-between;align-items:center;font:600 1.8rem/1 'Geist';letter-spacing:.18em;text-transform:uppercase;color:rgba(168,184,204,.55);pointer-events:none}
+#rodape .dir{display:flex;align-items:center;gap:2.6rem}
+#rodape .num{letter-spacing:.06em;font-variant-numeric:tabular-nums}
+#rodape .pontos{display:flex;gap:.9rem}
+#rodape .pontos i{width:1.1rem;height:1.1rem;border-radius:50%;background:rgba(255,255,255,.15);transition:background .3s}
+#rodape .pontos i.on{background:var(--ciano)}
+#progresso{position:absolute;left:0;right:0;bottom:0;height:.6rem;background:rgba(255,255,255,.05)}
+#progresso i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--azul),var(--ciano));transition:width .6s cubic-bezier(.2,.7,.2,1)}
+body.capa #rodape{opacity:0}
+
+/* ---------- menu, laser, tela preta ---------- */
+#menu{position:fixed;inset:0;z-index:20;background:rgba(7,19,31,.96);color:var(--tinta);display:none;padding:5vh 6vw;box-sizing:border-box;overflow:auto;font-family:'Geist'}
+#menu.on{display:block}
+#menu h5{font:700 2.2vh/1 'Geist';letter-spacing:.22em;text-transform:uppercase;color:var(--ciano);margin:0 0 3vh}
+#menu .grade-menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(30vh,1fr));gap:1.6vh}
+#menu button{all:unset;cursor:pointer;padding:1.8vh 2vh;border-radius:1.4vh;background:rgba(255,255,255,.07);font:600 2vh/1.25 'Geist';color:var(--tinta);display:flex;gap:1.4vh;align-items:baseline}
+#menu button:hover,#menu button.atual{background:var(--azul)}
+#menu button span{font-weight:800;opacity:.65}
+#menu .ajuda{margin-top:4vh;font-size:1.8vh;line-height:1.8;color:var(--suave)}
+#menu kbd{font-family:'Geist';font-weight:700;padding:.2vh .8vh;border-radius:.6vh;background:rgba(255,255,255,.14)}
+#laser{position:fixed;z-index:30;width:2.2vh;height:2.2vh;margin:-1.1vh 0 0 -1.1vh;border-radius:50%;background:#FF3B1F;box-shadow:0 0 1vh .5vh rgba(255,59,31,.75),0 0 3vh 1.4vh rgba(255,59,31,.35);pointer-events:none;display:none}
+#laser.on{display:block}
+#preto{position:fixed;inset:0;z-index:25;background:#000;display:none}
+#preto.on{display:block}
+
+/* ---------- captura (?slide=N) e PDF (&pdf) ---------- */
+.captura *,.captura *::before,.captura *::after{transition:none!important;animation:none!important}
+html.pdf{font-size:7.2px}
+html.pdf,html.pdf body{height:auto;overflow:visible}
+html.pdf *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html.pdf #palco{position:relative;left:0;top:0;transform:none;width:1280px;height:720px}
