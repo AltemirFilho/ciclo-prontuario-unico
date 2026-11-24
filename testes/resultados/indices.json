@@ -8,9 +8,9 @@
       "criar": "CREATE INDEX ix_registro_paciente_data ON registro_clinico (paciente_id, criado_em DESC)",
       "sql": "SELECT id, criado_em, tipo\n  FROM registro_clinico\n WHERE paciente_id = 3048\n ORDER BY criado_em DESC\n LIMIT 50",
       "sem": {
-        "mediana": 9.204,
-        "minimo": 8.491,
-        "maximo": 9.861,
+        "mediana": 9.241,
+        "minimo": 8.903,
+        "maximo": 11.061,
         "repeticoes": 15,
         "plano": "Limit (actual rows=50.00 loops=1)\n  Buffers: shared hit=3698\n  ->  Sort (actual rows=50.00 loops=1)\n        Sort Key: criado_em DESC\n        Sort Method: quicksort  Memory: 30kB\n        Buffers: shared hit=3698\n        ->  Seq Scan on registro_clinico (actual rows=78.00 loops=1)\n              Filter: (paciente_id = 3048)\n              Rows Removed by Filter: 180161\n              Buffers: shared hit=3698",
         "nos": [
@@ -21,9 +21,9 @@
         "indicesUsados": []
       },
       "com": {
-        "mediana": 0.095,
-        "minimo": 0.059,
-        "maximo": 0.143,
+        "mediana": 0.089,
+        "minimo": 0.057,
+        "maximo": 1.707,
         "repeticoes": 15,
         "plano": "Limit (actual rows=50.00 loops=1)\n  Buffers: shared hit=14\n  ->  Index Scan using ix_registro_paciente_data on registro_clinico (actual rows=50.00 loops=1)\n        Index Cond: (paciente_id = 3048)\n        Index Searches: 1\n        Buffers: shared hit=14",
         "nos": [
@@ -34,7 +34,7 @@
           "ix_registro_paciente_data"
         ]
       },
-      "vezesMaisRapido": 96.8842105263158,
+      "vezesMaisRapido": 103.8314606741573,
       "usouIndice": true
     },
     {
@@ -45,9 +45,9 @@
       "criar": "CREATE INDEX ix_paciente_nome_busca ON paciente USING gin (normalizar(nome) gin_trgm_ops)",
       "sql": "SELECT id, nome\n  FROM paciente\n WHERE normalizar('maria souza') <% normalizar(nome)",
       "sem": {
-        "mediana": 38.352,
-        "minimo": 30.727,
-        "maximo": 44.782,
+        "mediana": 36.542,
+        "minimo": 33.683,
+        "maximo": 38.93,
         "repeticoes": 15,
         "plano": "Seq Scan on paciente (actual rows=14.00 loops=1)\n  Filter: ('maria souza'::text <% normalizar((nome)::text))\n  Rows Removed by Filter: 4992\n  Buffers: shared hit=58",
         "nos": [
@@ -56,9 +56,9 @@
         "indicesUsados": []
       },
       "com": {
-        "mediana": 0.575,
-        "minimo": 0.478,
-        "maximo": 1.006,
+        "mediana": 0.516,
+        "minimo": 0.487,
+        "maximo": 0.944,
         "repeticoes": 15,
         "plano": "Bitmap Heap Scan on paciente (actual rows=14.00 loops=1)\n  Filter: ('maria souza'::text <% normalizar((nome)::text))\n  Rows Removed by Filter: 34\n  Heap Blocks: exact=29\n  Buffers: shared hit=54\n  ->  Bitmap Index Scan on ix_paciente_nome_busca (actual rows=48.00 loops=1)\n        Index Cond: (normalizar((nome)::text) %> 'maria souza'::text)\n        Index Searches: 1\n        Buffers: shared hit=25\nPlanning:\n  Buffers: shared hit=1",
         "nos": [
@@ -69,7 +69,7 @@
           "ix_paciente_nome_busca"
         ]
       },
-      "vezesMaisRapido": 66.6991304347826,
+      "vezesMaisRapido": 70.81782945736434,
       "usouIndice": true
     },
     {
@@ -80,9 +80,9 @@
       "criar": "CREATE INDEX ix_acesso_paciente_momento ON acesso_prontuario (paciente_id, momento DESC)",
       "sql": "SELECT momento, acao, profissional_id\n  FROM acesso_prontuario\n WHERE paciente_id = 3048\n ORDER BY momento DESC\n LIMIT 20",
       "sem": {
-        "mediana": 14.02,
-        "minimo": 13.34,
-        "maximo": 18.441,
+        "mediana": 14.52,
+        "minimo": 13.734,
+        "maximo": 16.487,
         "repeticoes": 15,
         "plano": "Limit (actual rows=20.00 loops=1)\n  Buffers: shared hit=2651\n  ->  Sort (actual rows=20.00 loops=1)\n        Sort Key: momento DESC\n        Sort Method: top-N heapsort  Memory: 26kB\n        Buffers: shared hit=2651\n        ->  Seq Scan on acesso_prontuario (actual rows=156.00 loops=1)\n              Filter: (paciente_id = 3048)\n              Rows Removed by Filter: 360322\n              Buffers: shared hit=2651",
         "nos": [
@@ -93,9 +93,9 @@
         "indicesUsados": []
       },
       "com": {
-        "mediana": 0.029,
-        "minimo": 0.027,
-        "maximo": 0.053,
+        "mediana": 0.036,
+        "minimo": 0.031,
+        "maximo": 0.061,
         "repeticoes": 15,
         "plano": "Limit (actual rows=20.00 loops=1)\n  Buffers: shared hit=23\n  ->  Index Scan using ix_acesso_paciente_momento on acesso_prontuario (actual rows=20.00 loops=1)\n        Index Cond: (paciente_id = 3048)\n        Index Searches: 1\n        Buffers: shared hit=23",
         "nos": [
@@ -106,7 +106,7 @@
           "ix_acesso_paciente_momento"
         ]
       },
-      "vezesMaisRapido": 483.44827586206895,
+      "vezesMaisRapido": 403.33333333333337,
       "usouIndice": true
     },
     {
@@ -117,9 +117,9 @@
       "criar": "CREATE INDEX ix_atendimento_profissional_inicio ON atendimento (profissional_id, inicio)",
       "sql": "SELECT id, inicio, sala, status\n  FROM atendimento\n WHERE profissional_id = 6\n   AND inicio >= date_trunc('day', now())\n   AND inicio <  date_trunc('day', now()) + interval '1 day'\n ORDER BY inicio",
       "sem": {
-        "mediana": 1.876,
-        "minimo": 1.77,
-        "maximo": 2.695,
+        "mediana": 2.285,
+        "minimo": 2.167,
+        "maximo": 2.513,
         "repeticoes": 15,
         "plano": "Sort (actual rows=8.00 loops=1)\n  Sort Key: inicio\n  Sort Method: quicksort  Memory: 25kB\n  Buffers: shared hit=310\n  ->  Index Scan using ix_atendimento_paciente on atendimento (actual rows=8.00 loops=1)\n        Index Cond: ((inicio >= date_trunc('day'::text, now())) AND (inicio < (date_trunc('day'::text, now()) + '1 day'::interval)))\n        Filter: (profissional_id = 6)\n        Rows Removed by Filter: 47\n        Index Searches: 1\n        Buffers: shared hit=310",
         "nos": [
@@ -131,9 +131,9 @@
         ]
       },
       "com": {
-        "mediana": 0.045,
-        "minimo": 0.033,
-        "maximo": 0.081,
+        "mediana": 0.041,
+        "minimo": 0.035,
+        "maximo": 0.142,
         "repeticoes": 15,
         "plano": "Sort (actual rows=8.00 loops=1)\n  Sort Key: inicio\n  Sort Method: quicksort  Memory: 25kB\n  Buffers: shared hit=5\n  ->  Bitmap Heap Scan on atendimento (actual rows=8.00 loops=1)\n        Recheck Cond: ((profissional_id = 6) AND (inicio >= date_trunc('day'::text, now())) AND (inicio < (date_trunc('day'::text, now()) + '1 day'::interval)))\n        Heap Blocks: exact=2\n        Buffers: shared hit=5\n        ->  Bitmap Index Scan on ix_atendimento_profissional_inicio (actual rows=8.00 loops=1)\n              Index Cond: ((profissional_id = 6) AND (inicio >= date_trunc('day'::text, now())) AND (inicio < (date_trunc('day'::text, now()) + '1 day'::interval)))\n              Index Searches: 1\n              Buffers: shared hit=3",
         "nos": [
@@ -145,7 +145,7 @@
           "ix_atendimento_profissional_inicio"
         ]
       },
-      "vezesMaisRapido": 41.68888888888889,
+      "vezesMaisRapido": 55.73170731707317,
       "usouIndice": true
     }
   ],
@@ -155,7 +155,7 @@
     "situacao": "A recepção digita o CPF. Nenhum índice extra foi criado para isso.",
     "indice": "uq_paciente_cpf",
     "consulta": "SELECT id, nome FROM paciente WHERE cpf = '18398029609'",
-    "tempo": 0.02,
+    "tempo": 0.019,
     "plano": "Index Scan using uq_paciente_cpf on paciente (actual rows=1.00 loops=1)\n  Index Cond: (cpf = '18398029609'::bpchar)\n  Index Searches: 1\n  Buffers: shared hit=3",
     "usouIndice": true
   }

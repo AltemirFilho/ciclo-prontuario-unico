@@ -3,24 +3,24 @@
     "pacientes": 1250,
     "atendimentos": 10000,
     "registros": 22457,
-    "sem": 1.18,
-    "com": 0.043,
-    "vezes": 27.441860465116278
+    "sem": 1.139,
+    "com": 0.048,
+    "vezes": 23.729166666666668
   },
   {
     "pacientes": 5000,
     "atendimentos": 40000,
     "registros": 90171,
-    "sem": 4.711,
-    "com": 0.047,
-    "vezes": 100.2340425531915
+    "sem": 4.697,
+    "com": 0.041,
+    "vezes": 114.5609756097561
   },
   {
     "pacientes": 20000,
     "atendimentos": 160000,
     "registros": 360051,
-    "sem": 28.333,
-    "com": 0.049,
-    "vezes": 578.2244897959183
+    "sem": 22.009,
+    "com": 0.044,
+    "vezes": 500.2045454545455
   }
 ]

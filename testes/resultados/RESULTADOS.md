@@ -1,6 +1,6 @@
 # Resultados dos testes
 
-Executado em 24/11/2026, 09:37:45 · PostgreSQL 19.0 (PGlite 0.6.0) (PGlite 0.6.0) · Node v24.15.0
+Executado em 24/11/2026, 09:51:45 · PostgreSQL 19.0 (PGlite 0.6.0) (PGlite 0.6.0) · Node v24.15.0
 Máquina: Intel(R) Core(TM) Ultra 9 185H, 32 GB de RAM, Windows_NT 10.0.26200
 
 Tamanho do banco durante os testes:
@@ -46,17 +46,17 @@ Tamanho do banco durante os testes:
 | T25 | Regra (gatilho) | O mesmo registro não é retificado duas vezes | A prescrição já foi corrigida; corrigir de novo o original deixaria duas versões valendo. | Recusar (23505 · uq_registro_retifica) | 23505 · uq_registro_retifica · duplicate key value violates unique constraint "uq_registro_retifica" | PASSOU |
 | T26 | Regra (gatilho) | Atendimento com falta não recebe evolução | Dona Francisca faltou à fisio; alguém tenta lançar uma sessão nesse dia. | Recusar (P0001 · regra_atendimento_valido) | P0001 · regra_atendimento_valido · Atendimento com status "faltou" não recebe registro clínico. | PASSOU |
 | T27 | Regra (gatilho) | Profissional desligado não escreve | O Dr. Fernando saiu da clínica, mas o login dele ainda existe. | Recusar (P0001 · regra_profissional_ativo) | P0001 · regra_profissional_ativo · Profissional inativo não pode registrar no prontuário. | PASSOU |
-| T28 | Regra (gatilho) | A hora do registro é a do servidor | Tentativa de lançar uma evolução com data de ontem para cobrir esquecimento. | Aceitar e conferir o resultado | pedido: 23/11 09:37 · gravado: 24/11 09:37 | PASSOU |
+| T28 | Regra (gatilho) | A hora do registro é a do servidor | Tentativa de lançar uma evolução com data de ontem para cobrir esquecimento. | Aceitar e conferir o resultado | pedido: 23/11 09:51 · gravado: 24/11 09:51 | PASSOU |
 | T29 | Regra (gatilho) | Toda escrita deixa rastro na auditoria | A fisio grava uma evolução; o banco anota quem, o quê e quando. | Aceitar e conferir o resultado | 1 linha de auditoria: escrita por Camila Rocha | PASSOU |
 | T30 | Regra (gatilho) | A auditoria não pode ser apagada | Alguém tenta apagar o rastro de quem abriu a ficha. | Recusar (P0001 · regra_acesso_prontuario_imutavel) | P0001 · regra_acesso_prontuario_imutavel · DELETE em acesso_prontuario não é permitido: o prontuário guarda a história inteira. | PASSOU |
 | T31 | Consulta | Linha do tempo única, de todas as especialidades | A fisio abre o prontuário da Dona Maria e enxerga o que médica, enfermagem e nutrição escreveram. | Aceitar e conferir o resultado | 14 registros de 4 especialidades; o mais recente é de Medicina (Helena Prado) | PASSOU |
-| T32 | Consulta | Abrir o prontuário também deixa rastro | Só de abrir a ficha, a leitura fica registrada (LGPD). | Aceitar e conferir o resultado | 1 leitura registrada: Camila Rocha às 09:37 | PASSOU |
+| T32 | Consulta | Abrir o prontuário também deixa rastro | Só de abrir a ficha, a leitura fica registrada (LGPD). | Aceitar e conferir o resultado | 1 leitura registrada: Camila Rocha às 09:51 | PASSOU |
 | T33 | Consulta | Sigilo: a fisio sabe que houve psicologia, mas não lê o conteúdo | José faz psicologia e fisioterapia no mesmo prontuário. | Aceitar e conferir o resultado | 2 registros sigilosos aparecem; conteúdo oculto em todos: true | PASSOU |
 | T34 | Consulta | Sigilo: a psicóloga lê o próprio registro | A mesma linha do tempo, aberta pela psicóloga Renata. | Aceitar e conferir o resultado | 2 registros sigilosos, todos legíveis para a Psicologia | PASSOU |
 | T35 | Consulta | Busca acha o paciente sem acento e com erro de digitação | A recepção digita "joao pedro conseicao". | Aceitar e conferir o resultado | primeiro resultado: João Pedro da Conceição (semelhança 0.65) | PASSOU |
 | T36 | Consulta | Busca pelo CPF digitado com máscara | A recepção digita o CPF com pontos e traço: 183.980.296-09. | Aceitar e conferir o resultado | encontrado: Maria das Graças Souza | PASSOU |
 | T37 | Consulta | Aviso de possível ficha duplicada antes de cadastrar | Tentam cadastrar "Maria das Gracas Sousa", nascida em 12/03/1959, sem CPF em mãos. | Aceitar e conferir o resultado | parecido com: Maria das Graças Souza (semelhança 0.76) | PASSOU |
-| T38 | Consulta | Resumo mostra alergia, condições e quem escreveu por último | O cabeçalho que todo profissional vê ao abrir a ficha da Dona Maria. | Aceitar e conferir o resultado | alergia: Dipirona (grave); 3 condições; Enfermagem, Fisioterapia, Medicina, Nutrição; último registro: Helena Prado | PASSOU |
+| T38 | Consulta | Resumo mostra alergia, condições e quem escreveu por último | A fisio acabou de escrever; quem abre a ficha da Dona Maria já vê a fisio como última atualização. | Aceitar e conferir o resultado | alergia: Dipirona (grave); 3 condições; Enfermagem, Fisioterapia, Medicina, Nutrição; último registro: Camila Rocha | PASSOU |
 
 ## Índices: a mesma consulta sem e com o índice
 
@@ -64,12 +64,12 @@ Tempo de execução informado pelo próprio PostgreSQL (EXPLAIN ANALYZE), median
 
 | Exp. | Consulta | Índice | Sem índice (ms) | Com índice (ms) | Ganho | Plano sem | Plano com |
 | --- | --- | --- | ---: | ---: | ---: | --- | --- |
-| I1 | Abrir a linha do tempo do paciente | ix_registro_paciente_data | 9,20 | 0,095 | 96.9x | Limit > Sort > Seq Scan | Limit > Index Scan |
-| I2 | Buscar paciente pelo nome, sem acento | ix_paciente_nome_busca | 38,35 | 0,575 | 66.7x | Seq Scan | Bitmap Heap Scan > Bitmap Index Scan |
-| I3 | Auditoria: quem abriu este prontuário | ix_acesso_paciente_momento | 14,02 | 0,029 | 483.4x | Limit > Sort > Seq Scan | Limit > Index Scan |
-| I4 | Agenda do dia do profissional | ix_atendimento_profissional_inicio | 1,88 | 0,045 | 41.7x | Sort > Index Scan | Sort > Bitmap Heap Scan > Bitmap Index Scan |
+| I1 | Abrir a linha do tempo do paciente | ix_registro_paciente_data | 9,24 | 0,089 | 103.8x | Limit > Sort > Seq Scan | Limit > Index Scan |
+| I2 | Buscar paciente pelo nome, sem acento | ix_paciente_nome_busca | 36,54 | 0,516 | 70.8x | Seq Scan | Bitmap Heap Scan > Bitmap Index Scan |
+| I3 | Auditoria: quem abriu este prontuário | ix_acesso_paciente_momento | 14,52 | 0,036 | 403.3x | Limit > Sort > Seq Scan | Limit > Index Scan |
+| I4 | Agenda do dia do profissional | ix_atendimento_profissional_inicio | 2,29 | 0,041 | 55.7x | Sort > Index Scan | Sort > Bitmap Heap Scan > Bitmap Index Scan |
 
-I5. Buscar pelo CPF usa o índice que o UNIQUE criou: sim, usou uq_paciente_cpf (0,020 ms).
+I5. Buscar pelo CPF usa o índice que o UNIQUE criou: sim, usou uq_paciente_cpf (0,019 ms).
 
 ### I1. Abrir a linha do tempo do paciente
 
@@ -240,6 +240,6 @@ Index Scan using uq_paciente_cpf on paciente (actual rows=1.00 loops=1)
 
 | Pacientes | Atendimentos | Registros clínicos | Sem índice (ms) | Com índice (ms) | Ganho |
 | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1.250 | 10.000 | 22.457 | 1,18 | 0,043 | 27.4x |
-| 5.000 | 40.000 | 90.171 | 4,71 | 0,047 | 100.2x |
-| 20.000 | 160.000 | 360.051 | 28,33 | 0,049 | 578.2x |
+| 1.250 | 10.000 | 22.457 | 1,14 | 0,048 | 23.7x |
+| 5.000 | 40.000 | 90.171 | 4,70 | 0,041 | 114.6x |
+| 20.000 | 160.000 | 360.051 | 22,01 | 0,044 | 500.2x |

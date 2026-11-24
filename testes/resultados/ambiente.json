@@ -1,12 +1,12 @@
 {
-  "quando": "24/11/2026, 09:37:45",
+  "quando": "24/11/2026, 09:51:45",
   "postgres": "PostgreSQL 19.0 (PGlite 0.6.0)",
   "pglite": "0.6.0",
   "node": "v24.15.0",
   "sistema": "Windows_NT 10.0.26200",
   "processador": "Intel(R) Core(TM) Ultra 9 185H",
   "memoriaGB": 32,
-  "tempoMontagemMs": 10172,
+  "tempoMontagemMs": 10645,
   "tabelas": [
     {
       "tabela": "paciente",

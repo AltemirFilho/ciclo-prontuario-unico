@@ -11,7 +11,7 @@
     "obtido": "22008 · date/time field value out of range: \"2026-02-30\"",
     "codigo": "22008",
     "restricao": null,
-    "ms": 2.3896999999997206
+    "ms": 1.76720000000023
   },
   {
     "id": "T02",
@@ -25,7 +25,7 @@
     "obtido": "22P02 · invalid input value for enum tipo_registro: \"evol.\"",
     "codigo": "22P02",
     "restricao": null,
-    "ms": 0.9974000000001979
+    "ms": 0.6305999999985943
   },
   {
     "id": "T03",
@@ -39,7 +39,7 @@
     "obtido": "22001 · value too long for type character(11)",
     "codigo": "22001",
     "restricao": null,
-    "ms": 0.6530999999995402
+    "ms": 0.5353000000013708
   },
   {
     "id": "T04",
@@ -53,7 +53,7 @@
     "obtido": "22P02 · invalid input syntax for type json",
     "codigo": "22P02",
     "restricao": null,
-    "ms": 0.686600000000908
+    "ms": 0.6271000000015192
   },
   {
     "id": "T05",
@@ -65,7 +65,7 @@
     "verificacao": "SELECT to_char(inicio AT TIME ZONE 'America/Maceio', 'HH24:MI') = '10:00' AS ok,\n                         'gravado ' || to_char(inicio AT TIME ZONE 'UTC', 'HH24:MI') || ' UTC = '\n                         || to_char(inicio AT TIME ZONE 'America/Maceio', 'HH24:MI') || ' em Aracaju' AS obtido\n                    FROM atendimento ORDER BY id DESC LIMIT 1",
     "passou": true,
     "obtido": "gravado 13:00 UTC = 10:00 em Aracaju",
-    "ms": 2.158900000000358
+    "ms": 2.1771000000007916
   },
   {
     "id": "T06",
@@ -79,7 +79,7 @@
     "obtido": "428C9 · cannot insert a non-DEFAULT value into column \"id\"",
     "codigo": "428C9",
     "restricao": null,
-    "ms": 0.3841999999986001
+    "ms": 0.41380000000026484
   },
   {
     "id": "T07",
@@ -93,7 +93,7 @@
     "obtido": "23505 · uq_paciente_cpf · duplicate key value violates unique constraint \"uq_paciente_cpf\"",
     "codigo": "23505",
     "restricao": "uq_paciente_cpf",
-    "ms": 0.8749000000007072
+    "ms": 0.9776000000001659
   },
   {
     "id": "T08",
@@ -107,7 +107,7 @@
     "obtido": "23514 · ck_paciente_cpf · new row for relation \"paciente\" violates check constraint \"ck_paciente_cpf\"",
     "codigo": "23514",
     "restricao": "ck_paciente_cpf",
-    "ms": 0.6429000000007363
+    "ms": 0.7111999999997352
   },
   {
     "id": "T09",
@@ -121,7 +121,7 @@
     "obtido": "23514 · ck_paciente_nome · new row for relation \"paciente\" violates check constraint \"ck_paciente_nome\"",
     "codigo": "23514",
     "restricao": "ck_paciente_nome",
-    "ms": 0.45710000000144646
+    "ms": 0.5147999999990134
   },
   {
     "id": "T10",
@@ -135,7 +135,7 @@
     "obtido": "23514 · ck_paciente_nascimento · new row for relation \"paciente\" violates check constraint \"ck_paciente_nascimento\"",
     "codigo": "23514",
     "restricao": "ck_paciente_nascimento",
-    "ms": 0.4342999999989843
+    "ms": 0.5079999999998108
   },
   {
     "id": "T11",
@@ -149,7 +149,7 @@
     "obtido": "23502 · null value in column \"texto\" of relation \"registro_clinico\" violates not-null constraint",
     "codigo": "23502",
     "restricao": null,
-    "ms": 0.9781999999995605
+    "ms": 1.1465000000007421
   },
   {
     "id": "T12",
@@ -163,7 +163,7 @@
     "obtido": "23514 · ck_registro_texto · new row for relation \"registro_clinico\" violates check constraint \"ck_registro_texto\"",
     "codigo": "23514",
     "restricao": "ck_registro_texto",
-    "ms": 0.7070999999996275
+    "ms": 0.8608000000003813
   },
   {
     "id": "T13",
@@ -177,7 +177,7 @@
     "obtido": "23503 · fk_registro_atendimento · insert or update on table \"registro_clinico\" violates foreign key constraint \"fk_registro_atendimento\"",
     "codigo": "23503",
     "restricao": "fk_registro_atendimento",
-    "ms": 0.738099999998667
+    "ms": 0.7813000000005559
   },
   {
     "id": "T14",
@@ -191,7 +191,7 @@
     "obtido": "23503 · fk_registro_atendimento · insert or update on table \"registro_clinico\" violates foreign key constraint \"fk_registro_atendimento\"",
     "codigo": "23503",
     "restricao": "fk_registro_atendimento",
-    "ms": 0.5895999999993364
+    "ms": 0.6758000000008906
   },
   {
     "id": "T15",
@@ -205,7 +205,7 @@
     "obtido": "23514 · ck_atendimento_periodo · new row for relation \"atendimento\" violates check constraint \"ck_atendimento_periodo\"",
     "codigo": "23514",
     "restricao": "ck_atendimento_periodo",
-    "ms": 0.4430000000011205
+    "ms": 0.4778999999998632
   },
   {
     "id": "T16",
@@ -219,7 +219,7 @@
     "obtido": "23514 · ck_registro_dor · new row for relation \"registro_clinico\" violates check constraint \"ck_registro_dor\"",
     "codigo": "23514",
     "restricao": "ck_registro_dor",
-    "ms": 0.6275000000005093
+    "ms": 0.6736000000000786
   },
   {
     "id": "T17",
@@ -233,7 +233,7 @@
     "obtido": "23505 · uq_alergia_ativa · duplicate key value violates unique constraint \"uq_alergia_ativa\"",
     "codigo": "23505",
     "restricao": "uq_alergia_ativa",
-    "ms": 0.91859999999906
+    "ms": 0.8335000000006403
   },
   {
     "id": "T18",
@@ -242,10 +242,10 @@
     "situacao": "A alergia foi descartada por engano e precisa ser registrada de novo.",
     "esperado": "Aceitar e conferir o resultado",
     "sql": "UPDATE alergia SET ativa = false WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND substancia = 'Dipirona';\nINSERT INTO alergia (paciente_id, substancia, gravidade, registrada_por)\n       VALUES ((SELECT id FROM paciente WHERE cpf = '18398029609'), 'Dipirona', 'grave', (SELECT id FROM profissional WHERE nome = 'Helena Prado'))",
-    "verificacao": "SELECT count(*) FILTER (WHERE ativa) = 1 AND count(*) = 2 AS ok,\n                         count(*) FILTER (WHERE ativa) || ' ativa, ' || count(*) FILTER (WHERE NOT ativa) || ' desativada' AS obtido\n                    FROM alergia WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND normalizar(substancia) = 'dipirona'",
+    "verificacao": "SELECT count(*) FILTER (WHERE ativa) = 1 AND count(*) FILTER (WHERE NOT ativa) >= 1 AS ok,\n                         count(*) FILTER (WHERE ativa) || ' ativa, ' || count(*) FILTER (WHERE NOT ativa) || ' desativada' AS obtido\n                    FROM alergia WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND normalizar(substancia) = 'dipirona'",
     "passou": true,
     "obtido": "1 ativa, 1 desativada",
-    "ms": 1.772899999999936
+    "ms": 1.7849999999998545
   },
   {
     "id": "T19",
@@ -259,7 +259,7 @@
     "obtido": "23505 · uq_profissional_registro · duplicate key value violates unique constraint \"uq_profissional_registro\"",
     "codigo": "23505",
     "restricao": "uq_profissional_registro",
-    "ms": 0.623700000000099
+    "ms": 0.6703999999990629
   },
   {
     "id": "T20",
@@ -273,7 +273,7 @@
     "obtido": "P0001 · regra_registro_clinico_imutavel · UPDATE em registro_clinico não é permitido: o prontuário guarda a história inteira.",
     "codigo": "P0001",
     "restricao": "regra_registro_clinico_imutavel",
-    "ms": 1.302800000001298
+    "ms": 1.1626999999989494
   },
   {
     "id": "T21",
@@ -287,7 +287,7 @@
     "obtido": "P0001 · regra_registro_clinico_imutavel · DELETE em registro_clinico não é permitido: o prontuário guarda a história inteira.",
     "codigo": "P0001",
     "restricao": "regra_registro_clinico_imutavel",
-    "ms": 0.5981000000010681
+    "ms": 0.6297000000013213
   },
   {
     "id": "T22",
@@ -301,7 +301,7 @@
     "obtido": "P0001 · regra_registro_clinico_imutavel · TRUNCATE em registro_clinico não é permitido: o prontuário guarda a história inteira.",
     "codigo": "P0001",
     "restricao": "regra_registro_clinico_imutavel",
-    "ms": 0.7866999999987456
+    "ms": 0.7502999999996973
   },
   {
     "id": "T23",
@@ -310,10 +310,10 @@
     "situacao": "A fisio Camila corrige a própria evolução; a original continua lá.",
     "esperado": "Aceitar e conferir o resultado",
     "sql": "INSERT INTO registro_clinico (atendimento_id, paciente_id, profissional_id, tipo, texto)\n       SELECT a.id, a.paciente_id, a.profissional_id, 'evolucao', 'Sessão com exercícios isométricos, sem carga.'\n         FROM atendimento a WHERE a.id = (SELECT id FROM atendimento WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND status = 'em_atendimento' LIMIT 1);\nINSERT INTO registro_clinico (atendimento_id, paciente_id, profissional_id, tipo, texto, retifica_id)\n       SELECT a.id, a.paciente_id, a.profissional_id, 'evolucao',\n              'Retificação: exercícios isométricos de quadríceps, 3 séries de 10, sem carga.',\n              (SELECT max(id) FROM registro_clinico WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609'))\n         FROM atendimento a WHERE a.id = (SELECT id FROM atendimento WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND status = 'em_atendimento' LIMIT 1)",
-    "verificacao": "SELECT count(*) = 2 AND count(retifica_id) = 1 AS ok,\n                         count(*) || ' registros: o original e a retificação que aponta para ele' AS obtido\n                    FROM registro_clinico\n                   WHERE atendimento_id = (SELECT id FROM atendimento WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND status = 'em_atendimento' LIMIT 1)",
+    "verificacao": "SELECT count(*) = 2 AND count(retifica_id) = 1\n                         AND bool_or(retifica_id = (SELECT min(id) FROM registro_clinico\n                                                     WHERE atendimento_id = (SELECT id FROM atendimento WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND status = 'em_atendimento' LIMIT 1) AND criado_em = now())) AS ok,\n                         count(*) || ' registros: o original e a retificação que aponta para ele' AS obtido\n                    FROM registro_clinico\n                   WHERE atendimento_id = (SELECT id FROM atendimento WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND status = 'em_atendimento' LIMIT 1)\n                     AND criado_em = now()",
     "passou": true,
     "obtido": "2 registros: o original e a retificação que aponta para ele",
-    "ms": 11.476700000001074
+    "ms": 12.536599999999453
   },
   {
     "id": "T24",
@@ -327,7 +327,7 @@
     "obtido": "P0001 · regra_retificacao_autor · Só o autor do registro pode retificá-lo.",
     "codigo": "P0001",
     "restricao": "regra_retificacao_autor",
-    "ms": 1.0821999999989202
+    "ms": 1.5138000000006286
   },
   {
     "id": "T25",
@@ -341,7 +341,7 @@
     "obtido": "23505 · uq_registro_retifica · duplicate key value violates unique constraint \"uq_registro_retifica\"",
     "codigo": "23505",
     "restricao": "uq_registro_retifica",
-    "ms": 0.8279999999995198
+    "ms": 0.8595000000004802
   },
   {
     "id": "T26",
@@ -355,7 +355,7 @@
     "obtido": "P0001 · regra_atendimento_valido · Atendimento com status \"faltou\" não recebe registro clínico.",
     "codigo": "P0001",
     "restricao": "regra_atendimento_valido",
-    "ms": 0.6076999999986583
+    "ms": 0.7338999999992666
   },
   {
     "id": "T27",
@@ -369,7 +369,7 @@
     "obtido": "P0001 · regra_profissional_ativo · Profissional inativo não pode registrar no prontuário.",
     "codigo": "P0001",
     "restricao": "regra_profissional_ativo",
-    "ms": 0.9633000000012544
+    "ms": 0.8449999999993452
   },
   {
     "id": "T28",
@@ -380,8 +380,8 @@
     "sql": "INSERT INTO registro_clinico (atendimento_id, paciente_id, profissional_id, tipo, texto, criado_em)\n          SELECT a.id, a.paciente_id, a.profissional_id, 'evolucao',\n                 'Sessão de fortalecimento sem intercorrências.', now() - interval '1 day'\n            FROM atendimento a WHERE a.id = (SELECT id FROM atendimento WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND status = 'em_atendimento' LIMIT 1)",
     "verificacao": "SELECT criado_em = now() AS ok,\n                         'pedido: ' || to_char(now() - interval '1 day', 'DD/MM HH24:MI') ||\n                         ' · gravado: ' || to_char(criado_em, 'DD/MM HH24:MI') AS obtido\n                    FROM registro_clinico ORDER BY id DESC LIMIT 1",
     "passou": true,
-    "obtido": "pedido: 23/11 09:37 · gravado: 24/11 09:37",
-    "ms": 1.080999999998312
+    "obtido": "pedido: 23/11 09:51 · gravado: 24/11 09:51",
+    "ms": 1.06210000000101
   },
   {
     "id": "T29",
@@ -393,7 +393,7 @@
     "verificacao": "SELECT count(*) = 1 AS ok,\n                         count(*) || ' linha de auditoria: ' || string_agg(acao::text || ' por ' || profissional, ', ') AS obtido\n                    FROM vw_auditoria\n                   WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND momento = now()",
     "passou": true,
     "obtido": "1 linha de auditoria: escrita por Camila Rocha",
-    "ms": 2.04320000000007
+    "ms": 1.9668000000001484
   },
   {
     "id": "T30",
@@ -407,7 +407,7 @@
     "obtido": "P0001 · regra_acesso_prontuario_imutavel · DELETE em acesso_prontuario não é permitido: o prontuário guarda a história inteira.",
     "codigo": "P0001",
     "restricao": "regra_acesso_prontuario_imutavel",
-    "ms": 0.605199999999968
+    "ms": 0.6371999999992113
   },
   {
     "id": "T31",
@@ -419,7 +419,7 @@
     "verificacao": "WITH l AS (SELECT * FROM linha_do_tempo((SELECT id FROM paciente WHERE cpf = '18398029609'), (SELECT id FROM profissional WHERE nome = 'Camila Rocha')))\n                  SELECT count(DISTINCT especialidade) >= 4\n                         AND (SELECT criado_em FROM l LIMIT 1) = (SELECT max(criado_em) FROM l) AS ok,\n                         count(*) || ' registros de ' || count(DISTINCT especialidade) || ' especialidades; o mais recente é de '\n                         || (SELECT especialidade || ' (' || profissional || ')' FROM l LIMIT 1) AS obtido\n                    FROM l",
     "passou": true,
     "obtido": "14 registros de 4 especialidades; o mais recente é de Medicina (Helena Prado)",
-    "ms": 2.3387000000002445
+    "ms": 2.440999999998894
   },
   {
     "id": "T32",
@@ -430,8 +430,8 @@
     "sql": "SELECT count(*) FROM linha_do_tempo((SELECT id FROM paciente WHERE cpf = '18398029609'), (SELECT id FROM profissional WHERE nome = 'Camila Rocha'))",
     "verificacao": "SELECT count(*) = 1 AS ok,\n                         count(*) || ' leitura registrada: ' || string_agg(profissional || ' às ' || to_char(momento, 'HH24:MI'), ', ') AS obtido\n                    FROM vw_auditoria\n                   WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND acao = 'leitura' AND momento = now()",
     "passou": true,
-    "obtido": "1 leitura registrada: Camila Rocha às 09:37",
-    "ms": 2.124099999999089
+    "obtido": "1 leitura registrada: Camila Rocha às 09:51",
+    "ms": 2.0843000000004395
   },
   {
     "id": "T33",
@@ -443,7 +443,7 @@
     "verificacao": "SELECT count(*) > 0 AND bool_and(oculto) AS ok,\n                         count(*) || ' registros sigilosos aparecem; conteúdo oculto em todos: ' || bool_and(oculto) AS obtido\n                    FROM linha_do_tempo((SELECT id FROM paciente WHERE cpf = '14041343526'), (SELECT id FROM profissional WHERE nome = 'Bruno Tavares')) WHERE sigiloso",
     "passou": true,
     "obtido": "2 registros sigilosos aparecem; conteúdo oculto em todos: true",
-    "ms": 1.417699999999968
+    "ms": 2.3425999999999476
   },
   {
     "id": "T34",
@@ -455,7 +455,7 @@
     "verificacao": "SELECT count(*) > 0 AND NOT bool_or(oculto) AS ok,\n                         count(*) || ' registros sigilosos, todos legíveis para a Psicologia' AS obtido\n                    FROM linha_do_tempo((SELECT id FROM paciente WHERE cpf = '14041343526'), (SELECT id FROM profissional WHERE nome = 'Renata Vasconcelos')) WHERE sigiloso",
     "passou": true,
     "obtido": "2 registros sigilosos, todos legíveis para a Psicologia",
-    "ms": 1.2877000000007683
+    "ms": 1.4961999999995896
   },
   {
     "id": "T35",
@@ -467,7 +467,7 @@
     "verificacao": "SELECT (SELECT nome FROM buscar_paciente('joao pedro conseicao') LIMIT 1) = 'João Pedro da Conceição' AS ok,\n                         'primeiro resultado: ' || (SELECT nome || ' (semelhança ' || round(semelhanca::numeric, 2) || ')'\n                                                     FROM buscar_paciente('joao pedro conseicao') LIMIT 1) AS obtido",
     "passou": true,
     "obtido": "primeiro resultado: João Pedro da Conceição (semelhança 0.65)",
-    "ms": 19.946799999999712
+    "ms": 20.608799999999974
   },
   {
     "id": "T36",
@@ -479,7 +479,7 @@
     "verificacao": "SELECT (SELECT nome FROM buscar_paciente('183.980.296-09') LIMIT 1) = 'Maria das Graças Souza' AS ok,\n                         'encontrado: ' || coalesce((SELECT nome FROM buscar_paciente('183.980.296-09') LIMIT 1), 'ninguém') AS obtido",
     "passou": true,
     "obtido": "encontrado: Maria das Graças Souza",
-    "ms": 2.704599999999118
+    "ms": 2.9477999999999156
   },
   {
     "id": "T37",
@@ -491,18 +491,18 @@
     "verificacao": "SELECT (SELECT nome FROM possiveis_duplicados('Maria das Gracas Sousa', DATE '1959-03-12') LIMIT 1) = 'Maria das Graças Souza' AS ok,\n                         'parecido com: ' || coalesce((SELECT nome || ' (semelhança ' || round(semelhanca::numeric, 2) || ')'\n                                                         FROM possiveis_duplicados('Maria das Gracas Sousa', DATE '1959-03-12') LIMIT 1), 'ninguém') AS obtido",
     "passou": true,
     "obtido": "parecido com: Maria das Graças Souza (semelhança 0.76)",
-    "ms": 1.897000000000844
+    "ms": 1.9799999999995634
   },
   {
     "id": "T38",
     "grupo": "Consulta",
     "titulo": "Resumo mostra alergia, condições e quem escreveu por último",
-    "situacao": "O cabeçalho que todo profissional vê ao abrir a ficha da Dona Maria.",
+    "situacao": "A fisio acabou de escrever; quem abre a ficha da Dona Maria já vê a fisio como última atualização.",
     "esperado": "Aceitar e conferir o resultado",
-    "sql": "SELECT 1",
-    "verificacao": "SELECT alergias @> '[{\"substancia\": \"Dipirona\", \"gravidade\": \"grave\"}]'\n                         AND cardinality(especialidades) = 4\n                         AND ultimo_registro_por = 'Helena Prado' AS ok,\n                         'alergia: ' || (alergias -> 0 ->> 'substancia') || ' (' || (alergias -> 0 ->> 'gravidade') || '); '\n                         || jsonb_array_length(condicoes) || ' condições; '\n                         || array_to_string(especialidades, ', ') || '; último registro: ' || ultimo_registro_por AS obtido\n                    FROM vw_resumo_paciente WHERE id = (SELECT id FROM paciente WHERE cpf = '18398029609')",
+    "sql": "INSERT INTO registro_clinico (atendimento_id, paciente_id, profissional_id, tipo, texto)\n          SELECT a.id, a.paciente_id, a.profissional_id, 'evolucao', 'Isometria de quadríceps, joelho direito sem carga.'\n            FROM atendimento a WHERE a.id = (SELECT id FROM atendimento WHERE paciente_id = (SELECT id FROM paciente WHERE cpf = '18398029609') AND status = 'em_atendimento' LIMIT 1)",
+    "verificacao": "SELECT alergias @> '[{\"substancia\": \"Dipirona\", \"gravidade\": \"grave\"}]'\n                         AND cardinality(especialidades) >= 4\n                         AND ultimo_registro_por = 'Camila Rocha'\n                         AND ultimo_registro_em = now() AS ok,\n                         'alergia: ' || (alergias -> 0 ->> 'substancia') || ' (' || (alergias -> 0 ->> 'gravidade') || '); '\n                         || jsonb_array_length(condicoes) || ' condições; '\n                         || array_to_string(especialidades, ', ') || '; último registro: ' || ultimo_registro_por AS obtido\n                    FROM vw_resumo_paciente WHERE id = (SELECT id FROM paciente WHERE cpf = '18398029609')",
     "passou": true,
-    "obtido": "alergia: Dipirona (grave); 3 condições; Enfermagem, Fisioterapia, Medicina, Nutrição; último registro: Helena Prado",
-    "ms": 2.6939000000002125
+    "obtido": "alergia: Dipirona (grave); 3 condições; Enfermagem, Fisioterapia, Medicina, Nutrição; último registro: Camila Rocha",
+    "ms": 3.0583000000005995
   }
 ]
